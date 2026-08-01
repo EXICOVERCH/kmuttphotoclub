@@ -12,6 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- 🚀 นำเข้า Firebase Scripts (v8) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,50 +38,20 @@
 
     <style>
         body { font-family: 'Kanit', sans-serif; background-color: #FFFFFF; -webkit-tap-highlight-color: transparent; }
-
-        /* Loading Screen */
-        #loader {
-            position: fixed; inset: 0; background-color: #FFFFFF; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-        }
+        #loader { position: fixed; inset: 0; background-color: #FFFFFF; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         .pulse-logo { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        /* Masonry Gallery */
-        .masonry-gallery {
-            column-count: 2;
-            column-gap: 0.75rem;
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.1); } }
+        .masonry-gallery { column-count: 2; column-gap: 0.75rem; }
         @media (min-width: 640px) { .masonry-gallery { column-count: 3; column-gap: 1.25rem; } }
         @media (min-width: 1024px) { .masonry-gallery { column-count: 4; column-gap: 1.5rem; } }
-        
-        .masonry-item {
-            break-inside: avoid; margin-bottom: 0.75rem; position: relative;
-            border-radius: 0.75rem; overflow: hidden; cursor: pointer;
-            touch-action: manipulation;
-            transform: translateZ(0); /* Hardware acceleration */
-        }
+        .masonry-item { break-inside: avoid; margin-bottom: 0.75rem; position: relative; border-radius: 0.75rem; overflow: hidden; cursor: pointer; touch-action: manipulation; transform: translateZ(0); }
         @media (min-width: 1024px) { .masonry-item { margin-bottom: 1.5rem; border-radius: 1rem; } }
-
-        .masonry-item img {
-            width: 100%; height: auto; display: block; transition: transform 0.5s ease;
-            background-color: #f3f4f6; /* Placeholder color while loading */
-        }
-        @media (hover: hover) {
-            .masonry-item:hover img { transform: scale(1.08); }
-        }
-        
-        /* Custom Scrollbar */
+        .masonry-item img { width: 100%; height: auto; display: block; transition: transform 0.5s ease; background-color: #f3f4f6; }
+        @media (hover: hover) { .masonry-item:hover img { transform: scale(1.08); } }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Slider Transitions */
         .slide-transition { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
@@ -86,10 +60,7 @@
     <!-- Loading Screen -->
     <div id="loader">
         <div class="flex flex-col items-center">
-            <img src="326739173_1839070083124543_4820509062487065087_n.png" 
-                 alt="KMUTT Photo Club Logo" 
-                 class="w-28 h-28 md:w-40 md:h-40 object-contain pulse-logo mb-6"
-                 onerror="this.src='https://placehold.co/200x200/FFFFFF/FF6600?text=Logo'">
+            <img src="326739173_1839070083124543_4820509062487065087_n.png" alt="KMUTT Photo Club Logo" class="w-28 h-28 md:w-40 md:h-40 object-contain pulse-logo mb-6" onerror="this.src='https://placehold.co/200x200/FFFFFF/FF6600?text=Logo'">
             <h2 class="text-brand font-bold text-xl md:text-2xl tracking-wider">KMUTT PHOTO CLUB</h2>
             <div class="mt-4 flex space-x-2">
                 <div class="w-2.5 h-2.5 bg-brand rounded-full animate-bounce" style="animation-delay: 0s;"></div>
@@ -104,34 +75,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 md:h-20">
                 <a href="#" onclick="switchPage('home')" class="flex items-center gap-2 md:gap-3 group">
-                    <img src="326739173_1839070083124543_4820509062487065087_n.png" 
-                         alt="Logo" 
-                         class="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform"
-                         onerror="this.src='https://placehold.co/40x40/FFFFFF/FF6600?text=KPC'">
-                    <span class="font-bold text-lg md:text-xl tracking-tight text-black transition-colors truncate">
-                        ชมรมศิลปะและการถ่ายภาพ
-                    </span>
+                    <img src="326739173_1839070083124543_4820509062487065087_n.png" alt="Logo" class="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" onerror="this.src='https://placehold.co/40x40/FFFFFF/FF6600?text=KPC'">
+                    <span class="font-bold text-lg md:text-xl tracking-tight text-black transition-colors truncate">ชมรมศิลปะและการถ่ายภาพ</span>
                 </a>
-
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
                     <button onclick="switchPage('home')" class="nav-link text-brand font-semibold transition-colors focus:outline-none" data-page="home">หน้าแรก & ผลงาน</button>
                     <button onclick="switchPage('pr')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="pr">ประชาสัมพันธ์</button>
                     <button onclick="switchPage('schedule')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="schedule">ตารางงานชมรม</button>
                 </div>
-
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand focus:outline-none p-2 -mr-2">
-                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu Panel -->
         <div id="mobile-menu-panel" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
             <div class="px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchPage('home')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-brand bg-orange-50 rounded-xl" data-page="home">หน้าแรก & ผลงาน</button>
@@ -143,7 +101,6 @@
 
     <!-- Page 1: Home & Gallery -->
     <div id="view-home" class="page-view block pt-20 md:pt-24 flex-grow">
-        <!-- Hero Section -->
         <section class="py-16 md:py-32 px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
             <div class="inline-block mb-4 md:mb-6 px-4 py-1.5 rounded-full bg-orange-50 border border-brand/20">
                 <span class="text-brand font-medium text-xs md:text-sm tracking-wide">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</span>
@@ -151,23 +108,15 @@
             <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 md:mb-6 text-black tracking-wider uppercase">
                 KMUTT PHOTO <span class="text-brand">CLUB</span>
             </h1>
-            <p class="text-gray-500 max-w-2xl text-base md:text-xl mb-8 md:mb-10 font-light leading-relaxed px-2">
-                คอมมูนิตี้สำหรับคนรักศิลปะและภาพถ่าย พื้นที่ปล่อยของ แลกเปลี่ยนมุมมอง และร่วมสร้างสรรค์ผลงานไปด้วยกัน
-            </p>
+            <p class="text-gray-500 max-w-2xl text-base md:text-xl mb-8 md:mb-10 font-light leading-relaxed px-2">คอมมูนิตี้สำหรับคนรักศิลปะและภาพถ่าย พื้นที่ปล่อยของ แลกเปลี่ยนมุมมอง และร่วมสร้างสรรค์ผลงานไปด้วยกัน</p>
         </section>
-
-        <!-- Gallery Section -->
         <section class="py-8 md:py-12 bg-gray-50 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8 md:mb-10">
                     <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">ผลงานของเรา</h2>
                     <p class="text-gray-500 text-sm md:text-base">ประมวลภาพกิจกรรมและผลงานสร้างสรรค์จากสมาชิกชมรม</p>
                 </div>
-                
-                <!-- Gallery Grid (ภาพจะถูกแทรกที่นี่ด้วย JavaScript) -->
-                <div class="masonry-gallery" id="gallery-grid">
-                    <!-- โค้ดจะถูกสร้างและสุ่มลำดับโดยอัตโนมัติ -->
-                </div>
+                <div class="masonry-gallery" id="gallery-grid"></div>
             </div>
         </section>
     </div>
@@ -178,7 +127,6 @@
             <div class="text-center mb-8 md:mb-10 relative">
                 <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4">ประชาสัมพันธ์</h2>
                 <p class="text-gray-500 text-base md:text-xl">ข่าวสาร กิจกรรม และประกาศสำคัญจากชมรม</p>
-                
                 <div id="admin-add-pr-container" class="hidden mt-6 md:absolute md:top-0 md:right-0 md:mt-2">
                     <button onclick="openCreatePRModal()" class="bg-brand hover:bg-brand-dark text-white font-semibold py-2 px-4 rounded-full shadow-md shadow-brand/30 flex items-center justify-center gap-2 transition-transform hover:scale-105 mx-auto">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -188,6 +136,7 @@
             </div>
 
             <div class="flex flex-col items-center">
+                <!-- ข่าวที่ดึงจาก Database จะมาแสดงตรงนี้ -->
                 <div id="dynamic-pr-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mb-8 empty:hidden"></div>
 
                 <article class="w-full bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 mb-8 cursor-pointer group" onclick="openPR('pr-recruit')">
@@ -218,7 +167,6 @@
                             <div class="text-brand font-medium text-sm flex items-center">เปิดดูอัลบั้มภาพ <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
                         </div>
                     </article>
-
                     <article class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer group" onclick="openPR('pr-soon')">
                         <div class="h-56 relative overflow-hidden bg-gray-100 flex justify-center items-center">
                             <img src="pr/Coming Soon/03.08.2026.png" alt="Coming Soon" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/f8fafc/FF6600?text=Coming+Soon'">
@@ -242,7 +190,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- Dynamic PR -->
+            <!-- Dynamic PR (โหลดจาก Firebase) -->
             <div id="content-pr-dynamic" class="pr-content-block hidden flex-col">
                 <div class="p-6 md:p-10 text-center border-b border-gray-100 bg-white rounded-t-3xl">
                     <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-bold mb-4">📰 ข่าวประชาสัมพันธ์</span>
@@ -253,12 +201,8 @@
                         <div class="overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-100 relative h-[40vh] md:h-[60vh] flex items-center justify-center">
                             <div id="dynamic-slider-track" class="flex w-full h-full slide-transition"></div>
                         </div>
-                        <button onclick="changeDynamicSlide(-1)" class="dynamic-slider-btn absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 bg-white text-gray-600 hover:text-brand hover:scale-110 p-2 md:p-3 rounded-full transition-all duration-300 shadow-xl border border-gray-100 z-10 hidden">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg>
-                        </button>
-                        <button onclick="changeDynamicSlide(1)" class="dynamic-slider-btn absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 bg-white text-gray-600 hover:text-brand hover:scale-110 p-2 md:p-3 rounded-full transition-all duration-300 shadow-xl border border-gray-100 z-10 hidden">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
-                        </button>
+                        <button onclick="changeDynamicSlide(-1)" class="dynamic-slider-btn absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 bg-white text-gray-600 hover:text-brand hover:scale-110 p-2 md:p-3 rounded-full transition-all duration-300 shadow-xl border border-gray-100 z-10 hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg></button>
+                        <button onclick="changeDynamicSlide(1)" class="dynamic-slider-btn absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 bg-white text-gray-600 hover:text-brand hover:scale-110 p-2 md:p-3 rounded-full transition-all duration-300 shadow-xl border border-gray-100 z-10 hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></button>
                         <div id="dynamic-slider-dots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10 hidden"></div>
                     </div>
                     <div id="dynamic-modal-desc" class="w-full max-w-4xl text-gray-700 text-lg md:text-xl leading-relaxed whitespace-pre-line text-center md:text-left"></div>
@@ -280,7 +224,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="content-pr-gallery" class="pr-content-block hidden flex-col h-full min-h-[75vh]">
                 <div class="p-6 md:p-8 border-b border-gray-100 shrink-0 text-center relative z-20 bg-white rounded-t-3xl">
                     <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-xs md:text-sm font-semibold mb-3">📸 อัลบั้มภาพประทับใจ</span>
@@ -294,7 +237,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="content-pr-soon" class="pr-content-block hidden flex-col items-center justify-center py-12 md:py-20 px-6 text-center h-full min-h-[50vh] bg-gray-50 rounded-3xl">
                 <img src="pr/Coming Soon/03.08.2026.png" alt="Coming Soon Poster" class="w-full max-w-md rounded-2xl shadow-2xl mb-8 border border-gray-200">
                 <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Coming Soon</h2>
@@ -307,11 +249,8 @@
         <div class="bg-white rounded-3xl w-full max-w-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
             <div class="px-6 py-4 bg-orange-50 border-b border-orange-100 flex justify-between items-center shrink-0">
                 <h3 class="text-xl font-bold text-brand">สร้างข่าวประชาสัมพันธ์ใหม่</h3>
-                <button onclick="closeCreatePRModal()" class="text-gray-400 hover:text-red-500 p-1 rounded-full transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeCreatePRModal()" class="text-gray-400 hover:text-red-500 p-1 rounded-full transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            
             <div class="p-6 overflow-y-auto custom-scrollbar flex-grow space-y-5">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">หัวข้อข่าว *</label>
@@ -321,7 +260,6 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">คำอธิบายสั้นๆ (แสดงหน้าปก) *</label>
                     <textarea id="pr-input-short" rows="2" placeholder="อธิบายย่อๆ 1-2 บรรทัด" class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
                 </div>
-                
                 <div class="bg-white border border-gray-200 rounded-xl p-4">
                     <label class="block text-sm font-medium text-gray-900 mb-2">แนบรูปภาพ (อัปโหลดได้ทีละหลายรูป) 📸</label>
                     <div class="relative border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:bg-gray-50 transition-colors">
@@ -330,19 +268,16 @@
                         <p class="mt-2 text-sm text-gray-600">คลิกที่นี่ หรือ ลากไฟล์รูปภาพมาวาง</p>
                         <p class="text-xs text-gray-500 mt-1">(สามารถคลุมดำเลือกหลายๆ รูปพร้อมกันได้ สูงสุด 32MB/รูป)</p>
                     </div>
-                    
                     <div id="pr-preview-container" class="hidden mt-4">
                         <p class="text-xs font-semibold text-gray-600 mb-2 border-b pb-1">รูปที่เลือกไว้ (<span id="pr-preview-count">0</span> รูป):</p>
                         <div id="pr-preview-grid" class="flex flex-wrap gap-3 max-h-48 overflow-y-auto custom-scrollbar p-1"></div>
                     </div>
                 </div>
-
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">รายละเอียดแบบเต็ม (แสดงเมื่อกดเข้าไปอ่าน)</label>
                     <textarea id="pr-input-full" rows="5" placeholder="พิมพ์เนื้อหา กติกา วันเวลา สถานที่..." class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
                 </div>
             </div>
-
             <div class="p-4 border-t border-gray-100 flex justify-end gap-3 shrink-0 bg-gray-50">
                 <button onclick="closeCreatePRModal()" class="px-5 py-2.5 text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 font-medium rounded-xl transition-colors">ยกเลิก</button>
                 <button id="save-pr-btn" onclick="savePRPost()" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-medium rounded-xl shadow-md flex items-center gap-2 transition-colors">
@@ -421,57 +356,40 @@
     </footer>
 
     <script>
-        // --- 🌟 ระบบจัดการ Gallery 100+ รูป แบบสุ่มกระจายอัตโนมัติ 🌟 ---
+        // ==========================================
+        // 🚀 1. การตั้งค่า Firebase (Database)
+        // ==========================================
         
-        // 1. รายชื่อรูปภาพ Photobooth (ต้องการให้อยู่บนสุดเสมอ)
-        const pinnedPhotoboothImages = [
-            "img/20260607_140233100.jpg",
-            "img/20260607_141925241.jpg",
-            "img/20260607_153702375.jpg",
-            "img/20260607_155146081.jpg",
-            "img/20260607_161013995.jpg"
-        ];
+        // เราใช้ Firebase SDK v8 (CDN) ดังนั้น syntax การเชื่อมต่อจะเป็นดังนี้
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw6R4BOCsPz4GWo01GLBNMh1VBcuWXkKI",
+            authDomain: "kmuttphotoclub-f1eb3.firebaseapp.com",
+            databaseURL: "https://kmuttphotoclub-f1eb3-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "kmuttphotoclub-f1eb3",
+            storageBucket: "kmuttphotoclub-f1eb3.firebasestorage.app",
+            messagingSenderId: "227856132256",
+            appId: "1:227856132256:web:5e84c1757b267ca2cd81c5",
+            measurementId: "G-8FDPP8EQSP"
+        };
 
-        // 2. รายชื่อไฟล์รูปทั้งหมดจากโฟลเดอร์ img (อัปเดตล่าสุดจากการรวมโฟลเดอร์)
-        const allGalleryImages = [
-            "img/PRM05809-Enhanced-NR.jpg", "img/PRM00844.jpg", "img/PRM00585.jpg", "img/PRM00002.jpg", 
-            "img/pannawat_tay-5979.jpg", "img/pannawat_tay-5969.jpg", "img/pannawat_tay-5942 (1).jpg", "img/pannawat_tay-5397.jpg", 
-            "img/pannawat_tay-0370.jpg", "img/pannawat_tay-0368.jpg", "img/pannawat_tay-0281.JPG", "img/pannawat_tay-0223.JPG", 
-            "img/pannawat_tay-0107.JPG", "img/pannawat_tay-1-349.JPG", "img/pannawat_tay-1-333.JPG", "img/KMU_2928.jpg",
-            
-            "img/IMG_9994.jpg", "img/IMG_9961.jpg", "img/IMG_9946.jpg", "img/IMG_9888.jpg", 
-            "img/IMG_8250.jpg", "img/IMG_8226.jpg", "img/IMG_7872.jpg", "img/IMG_7862.jpg", 
-            "img/IMG_7404.jpg", "img/IMG_7259.jpg", "img/IMG_7142.jpg", "img/IMG_7061.jpg", 
-            "img/IMG_7053.jpg", "img/IMG_6265.jpg", "img/IMG_6212.jpg", "img/IMG_6152.jpg",
-            
-            "img/IMG_6047.jpg", "img/IMG_5996.jpg", "img/IMG_5921.jpg", "img/IMG_5693.jpg", 
-            "img/IMG_5689.jpg", "img/IMG_5380.jpg", "img/IMG_5057.jpg", "img/IMG_5000.jpg", 
-            "img/IMG_4921.jpg", "img/IMG_4503.JPG", "img/IMG_4160.JPG", "img/IMG_4055.JPG", 
-            "img/IMG_4039.JPG", "img/IMG_2976.jpg", "img/IMG_2772.jpg", "img/IMG_2484.jpg",
-            
-            "img/IMG_2480.jpg", "img/IMG_2408.JPG", "img/IMG_1731.jpg", "img/IMG_1635.jpg", 
-            "img/IMG_1628.jpg", "img/IMG_1569.jpg", "img/IMG_1467.jpg", "img/IMG_1266.jpg", 
-            "img/IMG_1264.jpg", "img/IMG_1075.jpg", "img/IMG_1044.jpg", "img/IMG_0963.jpg", 
-            "img/IMG_0949.jpg", "img/IMG_0820.jpg", "img/IMG_0810.jpg", "img/IMG_0808.jpg",
-            
-            "img/IMG_0807.jpg", "img/IMG_0771.jpg", "img/IMG_0762.jpg", "img/IMG_0719.jpg", 
-            "img/IMG_0665.jpg", "img/IMG_0646.jpg", "img/IMG_0544.jpg", "img/IMG_0509.jpg", 
-            "img/IMG_0416.jpg", "img/IMG_0415.jpg", "img/IMG_0258.jpg", "img/IMG_0239.jpg", 
-            "img/DSCF7378.jpg", "img/DSCF7037.jpg", "img/DSCF6881.jpg", "img/DSCF4530.jpg",
-            
-            "img/DSCF4408.jpg", "img/DSC04945.jpg", "img/BAS05297.jpg", "img/BAS05292.jpg", 
-            "img/118.JPG", "img/040.JPG", "img/034.JPG", "img/12.JPG", 
-            "img/08.JPG", "img/07.JPG", "img/_SON2753.JPG", "img/_DSC8494.JPG", 
-            "img/_DSC5570.JPG", "img/_DSC5546.JPG", "img/_DSC5370.JPG"
-        ];
+        // เริ่มต้นการทำงานของ Firebase
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            console.log("Firebase Realtime Database Connected!");
+        } catch (error) {
+            console.error("Firebase Initialization Error:", error);
+            alert("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง");
+        }
 
-        // 3. หมวดหมู่ข้อความแบบสุ่มให้ดูเท่ๆ
-        const photoTags = [
-            "ภาพบรรยากาศ", "กิจกรรมชมรม", "ผลงานสร้างสรรค์", "Portrait", 
-            "Landscape", "ความทรงจำ", "Behind the Scenes", "Event Photography"
-        ];
+        // ==========================================
+        // 🌟 2. ระบบ Gallery 
+        // ==========================================
+        const pinnedPhotoboothImages = [ "img/20260607_140233100.jpg", "img/20260607_141925241.jpg", "img/20260607_153702375.jpg", "img/20260607_155146081.jpg", "img/20260607_161013995.jpg" ];
+        const allGalleryImages = [ "img/PRM05809-Enhanced-NR.jpg", "img/PRM00844.jpg", "img/PRM00585.jpg", "img/PRM00002.jpg", "img/pannawat_tay-5979.jpg", "img/pannawat_tay-5969.jpg", "img/pannawat_tay-5942 (1).jpg", "img/pannawat_tay-5397.jpg", "img/pannawat_tay-0370.jpg", "img/pannawat_tay-0368.jpg", "img/pannawat_tay-0281.JPG", "img/pannawat_tay-0223.JPG", "img/pannawat_tay-0107.JPG", "img/pannawat_tay-1-349.JPG", "img/pannawat_tay-1-333.JPG", "img/KMU_2928.jpg", "img/IMG_9994.jpg", "img/IMG_9961.jpg", "img/IMG_9946.jpg", "img/IMG_9888.jpg", "img/IMG_8250.jpg", "img/IMG_8226.jpg", "img/IMG_7872.jpg", "img/IMG_7862.jpg", "img/IMG_7404.jpg", "img/IMG_7259.jpg", "img/IMG_7142.jpg", "img/IMG_7061.jpg", "img/IMG_7053.jpg", "img/IMG_6265.jpg", "img/IMG_6212.jpg", "img/IMG_6152.jpg", "img/IMG_6047.jpg", "img/IMG_5996.jpg", "img/IMG_5921.jpg", "img/IMG_5693.jpg", "img/IMG_5689.jpg", "img/IMG_5380.jpg", "img/IMG_5057.jpg", "img/IMG_5000.jpg", "img/IMG_4921.jpg", "img/IMG_4503.JPG", "img/IMG_4160.JPG", "img/IMG_4055.JPG", "img/IMG_4039.JPG", "img/IMG_2976.jpg", "img/IMG_2772.jpg", "img/IMG_2484.jpg", "img/IMG_2480.jpg", "img/IMG_2408.JPG", "img/IMG_1731.jpg", "img/IMG_1635.jpg", "img/IMG_1628.jpg", "img/IMG_1569.jpg", "img/IMG_1467.jpg", "img/IMG_1266.jpg", "img/IMG_1264.jpg", "img/IMG_1075.jpg", "img/IMG_1044.jpg", "img/IMG_0963.jpg", "img/IMG_0949.jpg", "img/IMG_0820.jpg", "img/IMG_0810.jpg", "img/IMG_0808.jpg", "img/IMG_0807.jpg", "img/IMG_0771.jpg", "img/IMG_0762.jpg", "img/IMG_0719.jpg", "img/IMG_0665.jpg", "img/IMG_0646.jpg", "img/IMG_0544.jpg", "img/IMG_0509.jpg", "img/IMG_0416.jpg", "img/IMG_0415.jpg", "img/IMG_0258.jpg", "img/IMG_0239.jpg", "img/DSCF7378.jpg", "img/DSCF7037.jpg", "img/DSCF6881.jpg", "img/DSCF4530.jpg", "img/DSCF4408.jpg", "img/DSC04945.jpg", "img/BAS05297.jpg", "img/BAS05292.jpg", "img/118.JPG", "img/040.JPG", "img/034.JPG", "img/12.JPG", "img/08.JPG", "img/07.JPG", "img/_SON2753.JPG", "img/_DSC8494.JPG", "img/_DSC5570.JPG", "img/_DSC5546.JPG", "img/_DSC5370.JPG" ];
+        const photoTags = [ "ภาพบรรยากาศ", "กิจกรรมชมรม", "ผลงานสร้างสรรค์", "Portrait", "Landscape", "ความทรงจำ", "Behind the Scenes", "Event Photography" ];
 
-        // ฟังก์ชันสลับตำแหน่ง Array (Shuffle)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -480,87 +398,76 @@
             return array;
         }
 
-        // ฟังก์ชันสร้างรูปภาพใส่หน้าเว็บ
         function renderGallery() {
-            const grid = document.getElementById('gallery-grid');
-            if (!grid) return;
-            
-            grid.innerHTML = ''; // ล้างของเก่า
-            
-            let htmlString = '';
-            
-            // --- โซน 1: แทรกภาพ Photobooth ไว้บนสุดเสมอ ---
+            const grid = document.getElementById('gallery-grid'); if (!grid) return; grid.innerHTML = ''; let htmlString = '';
             pinnedPhotoboothImages.forEach((filePath, index) => {
                 htmlString += `
                 <div class="masonry-item group" onclick="openLightbox(this)">
-                    <img src="${filePath}" alt="Photobooth ${index+1}" loading="lazy" 
-                         onerror="this.style.display='none'"> 
-                    <!-- ป้ายกำกับพิเศษสำหรับ Photobooth -->
-                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand shadow-sm z-10 flex items-center gap-1">
-                        ✨ Photobooth
-                    </div>
+                    <img src="${filePath}" alt="Photobooth" loading="lazy" onerror="this.style.display='none'"> 
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand shadow-sm z-10 flex items-center gap-1">✨ Photobooth</div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
                         <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Photobooth กิจกรรม</p>
-                        <p class="text-gray-300 text-xs md:text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">บันทึกความทรงจำ</p>
                     </div>
                 </div>`;
             });
-
-            // --- โซน 2: สุ่มภาพที่เหลือทั้งหมด ---
             const shuffledImages = shuffleArray([...allGalleryImages]);
-
             shuffledImages.forEach((filePath, index) => {
-                // สุ่ม Tag ข้อความมาแปะ
                 const randomTag = photoTags[Math.floor(Math.random() * photoTags.length)];
-                
-                // ใช้ loading="lazy" เพื่อให้เว็บโหลดภาพเฉพาะตอนที่เลื่อนลงมาถึง ช่วยให้เว็บร้อยกว่ารูปไม่ค้าง!
                 htmlString += `
                 <div class="masonry-item group" onclick="openLightbox(this)">
-                    <img src="${filePath}" alt="ผลงาน ${index+1}" loading="lazy" 
-                         onerror="this.style.display='none'"> 
+                    <img src="${filePath}" alt="ผลงาน" loading="lazy" onerror="this.style.display='none'"> 
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
                         <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${randomTag}</p>
                         <p class="text-gray-300 text-xs md:text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">โดย: สมาชิกชมรม</p>
                     </div>
                 </div>`;
             });
-            
             grid.innerHTML = htmlString;
         }
 
-
-        // --- ระบบอื่นๆ ของเว็บไซต์ ---
-
+        // ==========================================
+        // 🔧 3. ระบบ Admin & ImgBB
+        // ==========================================
         const IMGBB_API_KEY = "90fccaf1229be0e5e14edf6793a49c53"; 
-        
         let isAdmin = sessionStorage.getItem('isAdmin') === 'true';
 
         function toggleAdminLogin() {
             if (isAdmin) {
-                if(confirm("ต้องการออกจากระบบผู้ดูแลใช่หรือไม่?")) {
-                    isAdmin = false; sessionStorage.setItem('isAdmin', 'false'); updateAdminUI(); renderCalendar(); renderDynamicPR();
-                }
+                if(confirm("ต้องการออกจากระบบผู้ดูแลใช่หรือไม่?")) { isAdmin = false; sessionStorage.setItem('isAdmin', 'false'); updateAdminUI(); renderCalendar(); renderDynamicPR(); }
             } else {
-                if (prompt("กรุณาใส่รหัสผ่าน:") === "kmutt123") {
-                    isAdmin = true; sessionStorage.setItem('isAdmin', 'true'); alert("เข้าสู่ระบบสำเร็จ! (โหมด Admin)"); updateAdminUI(); renderCalendar(); renderDynamicPR();
-                } else alert("รหัสผ่านไม่ถูกต้อง!");
+                if (prompt("กรุณาใส่รหัสผ่าน:") === "kmutt123") { isAdmin = true; sessionStorage.setItem('isAdmin', 'true'); alert("เข้าสู่ระบบสำเร็จ! (โหมด Admin)"); updateAdminUI(); renderCalendar(); renderDynamicPR(); } else alert("รหัสผ่านไม่ถูกต้อง!");
             }
         }
         function updateAdminUI() {
-            const adminText = document.getElementById('admin-toggle-text'); const adminBanner = document.getElementById('admin-status-banner');
-            const addPrBtn = document.getElementById('admin-add-pr-container');
-            if (isAdmin) { adminText.textContent = "ออกจากระบบ (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) { adminBanner.classList.remove('hidden'); } if(addPrBtn) addPrBtn.classList.remove('hidden'); } 
-            else { adminText.textContent = "ผู้ดูแลระบบ"; adminText.classList.remove('text-brand'); adminText.classList.add('text-gray-500'); if(adminBanner) { adminBanner.classList.add('hidden'); } if(addPrBtn) addPrBtn.classList.add('hidden'); }
+            const adminText = document.getElementById('admin-toggle-text'); const adminBanner = document.getElementById('admin-status-banner'); const addPrBtn = document.getElementById('admin-add-pr-container');
+            if (isAdmin) { adminText.textContent = "ออกจากระบบ (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) adminBanner.classList.remove('hidden'); if(addPrBtn) addPrBtn.classList.remove('hidden'); } 
+            else { adminText.textContent = "ผู้ดูแลระบบ"; adminText.classList.remove('text-brand'); adminText.classList.add('text-gray-500'); if(adminBanner) adminBanner.classList.add('hidden'); if(addPrBtn) addPrBtn.classList.add('hidden'); }
         }
 
-        let prPostsData = JSON.parse(localStorage.getItem('kmuttPhotoClubPR')) || [];
+        // ==========================================
+        // 📰 4. ระบบข่าวประชาสัมพันธ์ (ดึงจาก Firebase)
+        // ==========================================
+        let prPostsData = [];
         let selectedFilesForUpload = []; 
+
+        // ดึงข้อมูลข่าวจาก Firebase แบบ Real-time
+        if (db) {
+            db.ref('pr_posts').on('value', (snapshot) => {
+                const data = snapshot.val();
+                prPostsData = [];
+                if (data) {
+                    // แปลงข้อมูล Object จาก Firebase เป็น Array และเรียงลำดับใหม่สุดขึ้นก่อน
+                    Object.keys(data).forEach(key => { prPostsData.push({ id: key, ...data[key] }); });
+                    prPostsData.reverse(); 
+                }
+                renderDynamicPR();
+            });
+        }
 
         function renderDynamicPR() {
             const grid = document.getElementById('dynamic-pr-grid'); if(!grid) return; grid.innerHTML = '';
-            
             prPostsData.forEach((post, index) => {
-                const imageList = post.images || (post.img ? [post.img] : []);
+                const imageList = post.images || [];
                 const displayImg = imageList.length > 0 ? imageList[0] : `https://placehold.co/800x400/f8fafc/FF6600?text=No+Image`;
                 const imgCount = imageList.length;
 
@@ -568,277 +475,142 @@
                 <article class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer group relative" onclick="openDynamicPR(${index})">
                     <div class="h-48 md:h-56 relative overflow-hidden bg-gray-100">
                         <img src="${displayImg}" alt="ปกข่าว" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x400/f8fafc/FF6600?text=No+Image'">
-                        
-                        ${imgCount > 1 ? `
-                        <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl text-white text-xs font-semibold shadow-lg flex items-center gap-1.5 z-10">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            ${imgCount} รูป
-                        </div>
-                        ` : ''}
+                        ${imgCount > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl text-white text-xs font-semibold shadow-lg flex items-center gap-1.5 z-10"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>${imgCount} รูป</div>` : ''}
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
                         <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand line-clamp-2">${post.title}</h3>
                         <p class="text-gray-600 text-sm mb-4 flex-grow line-clamp-2">${post.short_desc}</p>
                     </div>`;
-
-                if(isAdmin) {
-                    html += `<button onclick="event.stopPropagation(); deletePRPost(${index})" class="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-md z-20"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>`;
-                }
-                html += `</article>`; 
-                grid.innerHTML += html;
+                if(isAdmin) { html += `<button onclick="event.stopPropagation(); deletePRPost(${index})" class="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-md z-20"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>`; }
+                html += `</article>`; grid.innerHTML += html;
             });
         }
 
         document.getElementById('pr-input-file').addEventListener('change', function(event) {
-            const files = Array.from(event.target.files);
-            let oversized = false;
-            let validFiles = [];
-            
-            files.forEach(f => { 
-                if(f.size > 32 * 1024 * 1024) { 
-                    oversized = true; 
-                } else {
-                    validFiles.push(f); 
-                }
-            });
-            
-            if (oversized) {
-                alert("❌ มีรูปภาพบางรูปที่ขนาดใหญ่เกิน 32 MB ระบบจึงทำการตัดรูปนั้นออกโดยอัตโนมัติครับ");
-            }
-            
-            selectedFilesForUpload = [...selectedFilesForUpload, ...validFiles];
-            renderUploadPreviews();
-            event.target.value = ''; 
+            const files = Array.from(event.target.files); let oversized = false; let validFiles = [];
+            files.forEach(f => { if(f.size > 32 * 1024 * 1024) oversized = true; else validFiles.push(f); });
+            if (oversized) alert("❌ มีรูปบางรูปใหญ่เกิน 32 MB ระบบตัดรูปนั้นออกอัตโนมัติครับ");
+            selectedFilesForUpload = [...selectedFilesForUpload, ...validFiles]; renderUploadPreviews(); event.target.value = ''; 
         });
 
         function renderUploadPreviews() {
-            const container = document.getElementById('pr-preview-container');
-            const grid = document.getElementById('pr-preview-grid');
-            const count = document.getElementById('pr-preview-count');
-            
-            grid.innerHTML = '';
-            count.textContent = selectedFilesForUpload.length;
-
+            const container = document.getElementById('pr-preview-container'); const grid = document.getElementById('pr-preview-grid'); const count = document.getElementById('pr-preview-count');
+            grid.innerHTML = ''; count.textContent = selectedFilesForUpload.length;
             if (selectedFilesForUpload.length > 0) {
                 container.classList.remove('hidden');
                 selectedFilesForUpload.forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const div = document.createElement('div');
-                        div.className = 'relative group w-20 h-20 rounded-lg overflow-hidden border border-gray-200 shadow-sm shrink-0';
-                        div.innerHTML = `
-                            <img src="${e.target.result}" class="w-full h-full object-cover">
-                            <button type="button" onclick="removeSelectedFile(${index})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
-                        `;
+                        const div = document.createElement('div'); div.className = 'relative group w-20 h-20 rounded-lg overflow-hidden border border-gray-200 shadow-sm shrink-0';
+                        div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover"><button type="button" onclick="removeSelectedFile(${index})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg></button>`;
                         grid.appendChild(div);
                     }
                     reader.readAsDataURL(file);
                 });
-            } else {
-                container.classList.add('hidden');
-            }
+            } else { container.classList.add('hidden'); }
         }
-
-        function removeSelectedFile(index) {
-            selectedFilesForUpload.splice(index, 1);
-            renderUploadPreviews();
-        }
-
-        function openCreatePRModal() {
-            document.getElementById('pr-input-title').value = ''; document.getElementById('pr-input-short').value = ''; document.getElementById('pr-input-full').value = ''; 
-            selectedFilesForUpload = []; renderUploadPreviews();
-            document.getElementById('pr-create-modal').classList.remove('hidden'); document.getElementById('pr-create-modal').classList.add('flex');
-        }
+        function removeSelectedFile(index) { selectedFilesForUpload.splice(index, 1); renderUploadPreviews(); }
+        function openCreatePRModal() { document.getElementById('pr-input-title').value = ''; document.getElementById('pr-input-short').value = ''; document.getElementById('pr-input-full').value = ''; selectedFilesForUpload = []; renderUploadPreviews(); document.getElementById('pr-create-modal').classList.remove('hidden'); document.getElementById('pr-create-modal').classList.add('flex'); }
         function closeCreatePRModal() { document.getElementById('pr-create-modal').classList.add('hidden'); document.getElementById('pr-create-modal').classList.remove('flex'); }
 
         async function savePRPost() {
-            const title = document.getElementById('pr-input-title').value.trim();
-            const short = document.getElementById('pr-input-short').value.trim();
-            const full = document.getElementById('pr-input-full').value.trim();
-
+            if(!db) { alert("กรุณาตั้งค่า Firebase Config ก่อนโพสต์ข่าวครับ"); return; }
+            const title = document.getElementById('pr-input-title').value.trim(); const short = document.getElementById('pr-input-short').value.trim(); const full = document.getElementById('pr-input-full').value.trim();
             if (!title || !short) { alert('กรุณากรอก "หัวข้อข่าว" และ "คำอธิบายสั้นๆ"'); return; }
-
-            const btnText = document.getElementById('save-pr-text');
-            const spinner = document.getElementById('pr-loading-spinner');
-            const saveBtn = document.getElementById('save-pr-btn');
             
+            const btnText = document.getElementById('save-pr-text'); const spinner = document.getElementById('pr-loading-spinner'); const saveBtn = document.getElementById('save-pr-btn');
+            spinner.classList.remove('hidden'); saveBtn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+            
+            let uploadedUrls = [];
             if (selectedFilesForUpload.length > 0) {
-                spinner.classList.remove('hidden');
-                saveBtn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
-                
-                let uploadedUrls = [];
-
                 for (let i = 0; i < selectedFilesForUpload.length; i++) {
                     btnText.textContent = `กำลังอัปโหลดรูปที่ ${i + 1} / ${selectedFilesForUpload.length}...`;
-                    
-                    const formData = new FormData();
-                    formData.append('image', selectedFilesForUpload[i]);
-                    
+                    const formData = new FormData(); formData.append('image', selectedFilesForUpload[i]);
                     try {
                         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
                         const result = await response.json();
-                        
-                        if(result.success) {
-                            uploadedUrls.push(result.data.url);
-                        } else {
-                            throw new Error(result.error.message);
-                        }
-                    } catch (error) {
-                        console.error("Upload Error:", error);
-                        alert(`❌ เกิดข้อผิดพลาดในการอัปโหลดรูปที่ ${i+1}: ` + error.message);
-                        break; 
-                    }
+                        if(result.success) uploadedUrls.push(result.data.url);
+                        else throw new Error(result.error.message);
+                    } catch (error) { alert(`❌ เกิดข้อผิดพลาดในการอัปโหลดรูปที่ ${i+1}: ` + error.message); break; }
                 }
-                
-                finishSavingPR(title, short, full, uploadedUrls);
-
-            } else {
-                finishSavingPR(title, short, full, []);
             }
-        }
-
-        function finishSavingPR(title, short, full, imgUrlsArray) {
-            prPostsData.unshift({ title: title, short_desc: short, images: imgUrlsArray, full_desc: full });
-            localStorage.setItem('kmuttPhotoClubPR', JSON.stringify(prPostsData));
-            renderDynamicPR(); closeCreatePRModal();
             
-            document.getElementById('save-pr-text').textContent = "โพสต์ประกาศ";
-            document.getElementById('pr-loading-spinner').classList.add('hidden');
-            document.getElementById('save-pr-btn').classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+            // โพสต์ข้อมูลลง Firebase
+            db.ref('pr_posts').push({ title: title, short_desc: short, images: uploadedUrls, full_desc: full, timestamp: firebase.database.ServerValue.TIMESTAMP })
+            .then(() => {
+                closeCreatePRModal();
+                btnText.textContent = "โพสต์ประกาศ"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+            })
+            .catch((error) => {
+                alert("โพสต์ไม่สำเร็จ: " + error.message);
+                btnText.textContent = "โพสต์ประกาศ"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+            });
         }
 
         function deletePRPost(index) {
-            if(confirm('ต้องการลบข่าวประชาสัมพันธ์นี้ใช่หรือไม่?')) { prPostsData.splice(index, 1); localStorage.setItem('kmuttPhotoClubPR', JSON.stringify(prPostsData)); renderDynamicPR(); }
+            if(confirm('ต้องการลบข่าวประชาสัมพันธ์นี้ใช่หรือไม่?')) {
+                const postId = prPostsData[index].id;
+                db.ref('pr_posts/' + postId).remove();
+            }
         }
 
-        let currentDynamicSlide = 0;
-        let totalDynamicSlides = 0;
-
+        let currentDynamicSlide = 0; let totalDynamicSlides = 0;
         function openDynamicPR(index) {
-            const post = prPostsData[index]; 
-            document.getElementById('dynamic-modal-title').textContent = post.title;
-            
-            const imageList = post.images || (post.img ? [post.img] : []);
-            const imgContainer = document.getElementById('dynamic-modal-img-container');
-            const sliderTrack = document.getElementById('dynamic-slider-track');
-            const sliderDots = document.getElementById('dynamic-slider-dots');
-            const sliderBtns = document.querySelectorAll('.dynamic-slider-btn');
-            
-            sliderTrack.innerHTML = '';
-            sliderDots.innerHTML = '';
-            currentDynamicSlide = 0;
-            totalDynamicSlides = imageList.length;
-
+            const post = prPostsData[index]; document.getElementById('dynamic-modal-title').textContent = post.title;
+            const imageList = post.images || []; const imgContainer = document.getElementById('dynamic-modal-img-container'); const sliderTrack = document.getElementById('dynamic-slider-track'); const sliderDots = document.getElementById('dynamic-slider-dots'); const sliderBtns = document.querySelectorAll('.dynamic-slider-btn');
+            sliderTrack.innerHTML = ''; sliderDots.innerHTML = ''; currentDynamicSlide = 0; totalDynamicSlides = imageList.length;
             if (imageList.length > 0) {
                 imgContainer.classList.remove('hidden');
-                
                 imageList.forEach((url, i) => {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.className = 'w-full h-full object-contain shrink-0 cursor-zoom-in';
-                    img.onclick = () => { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox-modal').classList.remove('hidden'); };
-                    sliderTrack.appendChild(img);
-
-                    if (imageList.length > 1) {
-                        const dot = document.createElement('button');
-                        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-brand w-4' : 'bg-gray-300 hover:bg-gray-400'}`;
-                        dot.onclick = () => goToDynamicSlide(i);
-                        sliderDots.appendChild(dot);
-                    }
+                    const img = document.createElement('img'); img.src = url; img.className = 'w-full h-full object-contain shrink-0 cursor-zoom-in'; img.onclick = () => { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox-modal').classList.remove('hidden'); }; sliderTrack.appendChild(img);
+                    if (imageList.length > 1) { const dot = document.createElement('button'); dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-brand w-4' : 'bg-gray-300 hover:bg-gray-400'}`; dot.onclick = () => goToDynamicSlide(i); sliderDots.appendChild(dot); }
                 });
-
-                if (imageList.length > 1) {
-                    sliderBtns.forEach(btn => btn.classList.remove('hidden'));
-                    sliderDots.classList.remove('hidden');
-                } else {
-                    sliderBtns.forEach(btn => btn.classList.add('hidden'));
-                    sliderDots.classList.add('hidden');
-                }
-                
+                if (imageList.length > 1) { sliderBtns.forEach(btn => btn.classList.remove('hidden')); sliderDots.classList.remove('hidden'); } else { sliderBtns.forEach(btn => btn.classList.add('hidden')); sliderDots.classList.add('hidden'); }
                 updateDynamicSlidePosition();
-            } else {
-                imgContainer.classList.add('hidden');
-            }
-
-            document.getElementById('dynamic-modal-desc').textContent = post.full_desc || post.short_desc; 
-            openPR('pr-dynamic');
+            } else { imgContainer.classList.add('hidden'); }
+            document.getElementById('dynamic-modal-desc').textContent = post.full_desc || post.short_desc; openPR('pr-dynamic');
         }
+        function changeDynamicSlide(direction) { if (totalDynamicSlides <= 1) return; currentDynamicSlide = (currentDynamicSlide + direction + totalDynamicSlides) % totalDynamicSlides; updateDynamicSlidePosition(); }
+        function goToDynamicSlide(index) { currentDynamicSlide = index; updateDynamicSlidePosition(); }
+        function updateDynamicSlidePosition() { const track = document.getElementById('dynamic-slider-track'); track.style.transform = `translateX(-${currentDynamicSlide * 100}%)`; const dots = document.getElementById('dynamic-slider-dots').children; for (let i = 0; i < dots.length; i++) { if (i === currentDynamicSlide) dots[i].className = 'w-4 h-2 rounded-full transition-all duration-300 bg-brand'; else dots[i].className = 'w-2 h-2 rounded-full transition-all duration-300 bg-gray-300 hover:bg-gray-400'; } }
 
-        function changeDynamicSlide(direction) {
-            if (totalDynamicSlides <= 1) return;
-            currentDynamicSlide = (currentDynamicSlide + direction + totalDynamicSlides) % totalDynamicSlides;
-            updateDynamicSlidePosition();
-        }
-
-        function goToDynamicSlide(index) {
-            currentDynamicSlide = index;
-            updateDynamicSlidePosition();
-        }
-
-        function updateDynamicSlidePosition() {
-            const track = document.getElementById('dynamic-slider-track');
-            track.style.transform = `translateX(-${currentDynamicSlide * 100}%)`;
-            
-            const dots = document.getElementById('dynamic-slider-dots').children;
-            for (let i = 0; i < dots.length; i++) {
-                if (i === currentDynamicSlide) {
-                    dots[i].className = 'w-4 h-2 rounded-full transition-all duration-300 bg-brand';
-                } else {
-                    dots[i].className = 'w-2 h-2 rounded-full transition-all duration-300 bg-gray-300 hover:bg-gray-400';
-                }
-            }
-        }
-
-        const slideImages = Array.from({length: 17}, (_, i) => `pr/วิศวะ67/${i+1}.png`);
-        let currentSlideIndex = 0;
-        function updateSlide() {
-            const imgElement = document.getElementById('pr-slide-img');
-            imgElement.style.opacity = '0'; imgElement.style.transform = 'scale(0.96)';
-            setTimeout(() => { imgElement.src = slideImages[currentSlideIndex]; imgElement.style.opacity = '1'; imgElement.style.transform = 'scale(1)'; }, 250);
-        }
+        const slideImages = Array.from({length: 17}, (_, i) => `pr/วิศวะ67/${i+1}.png`); let currentSlideIndex = 0;
+        function updateSlide() { const imgElement = document.getElementById('pr-slide-img'); imgElement.style.opacity = '0'; imgElement.style.transform = 'scale(0.96)'; setTimeout(() => { imgElement.src = slideImages[currentSlideIndex]; imgElement.style.opacity = '1'; imgElement.style.transform = 'scale(1)'; }, 250); }
         function prevSlide() { currentSlideIndex = (currentSlideIndex - 1 + slideImages.length) % slideImages.length; updateSlide(); }
         function nextSlide() { currentSlideIndex = (currentSlideIndex + 1) % slideImages.length; updateSlide(); }
 
-        function openPR(prId) {
-            document.querySelectorAll('.pr-content-block').forEach(el => { el.classList.add('hidden'); el.classList.remove('flex'); });
-            document.getElementById('content-' + prId).classList.remove('hidden'); document.getElementById('content-' + prId).classList.add('flex');
-            if (prId === 'pr-gallery') { currentSlideIndex = 0; updateSlide(); }
-            const modal = document.getElementById('pr-modal'); const modalContent = document.getElementById('pr-modal-content');
-            modal.classList.remove('hidden'); modal.classList.add('flex'); setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.replace('scale-95', 'scale-100'); }, 10); document.body.style.overflow = 'hidden'; 
-        }
-        function closePR() {
-            const modal = document.getElementById('pr-modal'); const modalContent = document.getElementById('pr-modal-content');
-            modal.classList.add('opacity-0'); modalContent.classList.replace('scale-100', 'scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = 'auto'; }, 300); 
-        }
+        function openPR(prId) { document.querySelectorAll('.pr-content-block').forEach(el => { el.classList.add('hidden'); el.classList.remove('flex'); }); document.getElementById('content-' + prId).classList.remove('hidden'); document.getElementById('content-' + prId).classList.add('flex'); if (prId === 'pr-gallery') { currentSlideIndex = 0; updateSlide(); } const modal = document.getElementById('pr-modal'); const modalContent = document.getElementById('pr-modal-content'); modal.classList.remove('hidden'); modal.classList.add('flex'); setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.replace('scale-95', 'scale-100'); }, 10); document.body.style.overflow = 'hidden'; }
+        function closePR() { const modal = document.getElementById('pr-modal'); const modalContent = document.getElementById('pr-modal-content'); modal.classList.add('opacity-0'); modalContent.classList.replace('scale-100', 'scale-95'); setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = 'auto'; }, 300); }
 
         window.addEventListener('load', () => {
             setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 800); 
-            
-            updateAdminUI(); 
-            renderDynamicPR(); 
-            renderGallery(); // เรียกใช้งานระบบสร้าง Gallery 100 ภาพ ตอนเปิดเว็บ
-            
+            updateAdminUI(); renderGallery(); 
             if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
         });
 
         function switchPage(pageId) {
-            document.querySelectorAll('.page-view').forEach(v => { v.classList.add('hidden'); v.classList.remove('block'); });
-            document.getElementById(`view-${pageId}`).classList.remove('hidden'); document.getElementById(`view-${pageId}`).classList.add('block');
-            document.querySelectorAll('.nav-link').forEach(l => { if(l.dataset.page === pageId) { l.classList.remove('text-gray-600', 'hover:text-brand'); l.classList.add('text-brand', 'font-semibold'); } else { l.classList.add('text-gray-600', 'hover:text-brand'); l.classList.remove('text-brand', 'font-semibold'); } });
-            document.getElementById('mobile-menu-panel').classList.add('hidden'); window.scrollTo(0, 0); if(pageId === 'schedule') renderCalendar();
+            document.querySelectorAll('.page-view').forEach(v => { v.classList.add('hidden'); v.classList.remove('block'); }); document.getElementById(`view-${pageId}`).classList.remove('hidden'); document.getElementById(`view-${pageId}`).classList.add('block'); document.querySelectorAll('.nav-link').forEach(l => { if(l.dataset.page === pageId) { l.classList.remove('text-gray-600', 'hover:text-brand'); l.classList.add('text-brand', 'font-semibold'); } else { l.classList.add('text-gray-600', 'hover:text-brand'); l.classList.remove('text-brand', 'font-semibold'); } }); document.getElementById('mobile-menu-panel').classList.add('hidden'); window.scrollTo(0, 0); if(pageId === 'schedule') renderCalendar();
         }
         document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('mobile-menu-panel').classList.toggle('hidden'));
         function openLightbox(el) { document.getElementById('lightbox-img').src = el.querySelector('img').src; document.getElementById('lightbox-modal').classList.remove('hidden'); }
         function closeLightbox() { document.getElementById('lightbox-modal').classList.add('hidden'); }
 
-        const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = JSON.parse(localStorage.getItem('kmuttPhotoClubEvents')) || {};
+        // ==========================================
+        // 🗓️ 5. ระบบตารางงาน (ดึงจาก Firebase)
+        // ==========================================
+        const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = {};
         const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+        
+        // ดึงข้อมูลตารางงานแบบ Real-time
+        if(db) {
+            db.ref('events').on('value', (snapshot) => {
+                eventsData = snapshot.val() || {};
+                if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
+            });
+        }
+
         function renderCalendar() {
-            if(!calendarBody) return; calendarBody.innerHTML = ''; const y = currentDate.getFullYear(); const m = currentDate.getMonth();
-            document.getElementById('current-month-year').textContent = `${thaiMonths[m]} ${y + 543}`;
+            if(!calendarBody) return; calendarBody.innerHTML = ''; const y = currentDate.getFullYear(); const m = currentDate.getMonth(); document.getElementById('current-month-year').textContent = `${thaiMonths[m]} ${y + 543}`;
             const firstDay = new Date(y, m, 1).getDay(); const lastDay = new Date(y, m + 1, 0).getDate(); const prevLastDay = new Date(y, m, 0).getDate();
             for (let x = firstDay; x > 0; x--) calendarBody.innerHTML += `<div class="p-1 md:p-2 border-b border-r border-gray-100 bg-gray-50/50 opacity-50"><span class="text-xs md:text-sm text-gray-400">${prevLastDay - x + 1}</span></div>`;
             const today = new Date();
@@ -847,23 +619,63 @@
                 const div = document.createElement('div'); div.className = `p-1 md:p-2 border-b border-r border-gray-100 relative ${isToday ? 'bg-orange-50/30' : 'bg-white'} ${isAdmin ? 'cursor-pointer hover:bg-orange-50/50' : ''} group`;
                 let html = `<span class="inline-flex justify-center items-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-medium ${isToday ? 'bg-brand text-white shadow-sm' : 'text-gray-700'}">${i}</span>`;
                 let evHTML = '<div class="mt-1 space-y-1">';
-                if (eventsData[ds]) { eventsData[ds].forEach((ev, idx) => { evHTML += `<div class="text-[10px] md:text-xs bg-brand text-white px-1.5 md:px-2 py-1 rounded shadow-sm flex justify-between items-center truncate"><span>${ev.title}</span>`; if(isAdmin) evHTML += `<button class="ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; evHTML += `</div>`; }); }
+                if (eventsData[ds]) { 
+                    // แปลงกลับเป็น Array หากข้อมูลใน Firebase โดนแปลง
+                    const dayEvents = Array.isArray(eventsData[ds]) ? eventsData[ds] : Object.values(eventsData[ds]);
+                    dayEvents.forEach((ev, idx) => { 
+                        if(!ev) return; // กันค่าว่าง
+                        evHTML += `<div class="text-[10px] md:text-xs bg-brand text-white px-1.5 md:px-2 py-1 rounded shadow-sm flex justify-between items-center truncate"><span>${ev.title}</span>`; 
+                        if(isAdmin) evHTML += `<button class="ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; 
+                        evHTML += `</div>`; 
+                    }); 
+                }
                 div.innerHTML = html + evHTML + '</div>';
                 if (isAdmin) div.addEventListener('click', () => openEventModal(ds, i, thaiMonths[m], y + 543)); calendarBody.appendChild(div);
             }
         }
         document.getElementById('prev-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
         document.getElementById('next-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+        
         function openEventModal(key, d, m, y) {
             selectedDateKey = key; document.getElementById('modal-date-text').textContent = `วัน${d} ${m} ${y}`; document.getElementById('event-title').value = '';
             const list = document.getElementById('existing-events-list'); const cont = document.getElementById('existing-events-container');
-            if(eventsData[key] && eventsData[key].length > 0) { cont.classList.remove('hidden'); list.innerHTML = ''; eventsData[key].forEach((ev, idx) => list.innerHTML += `<li class="flex justify-between p-2 border-b"><span class="text-sm">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 text-xs">ลบ</button></li>`); } else cont.classList.add('hidden');
+            if(eventsData[key] && Object.keys(eventsData[key]).length > 0) { 
+                cont.classList.remove('hidden'); list.innerHTML = ''; 
+                const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
+                dayEvents.forEach((ev, idx) => {
+                    if(ev) list.innerHTML += `<li class="flex justify-between p-2 border-b"><span class="text-sm">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 text-xs">ลบ</button></li>`;
+                }); 
+            } else cont.classList.add('hidden');
             const modal = document.getElementById('event-modal'); modal.classList.remove('hidden'); setTimeout(() => document.getElementById('event-modal-content').classList.replace('scale-95', 'scale-100'), 10);
         }
         function closeEventModal() { document.getElementById('event-modal-content').classList.replace('scale-100', 'scale-95'); setTimeout(() => document.getElementById('event-modal').classList.add('hidden'), 150); }
-        function deleteEvent(k, idx) { if(confirm('ลบกิจกรรม?')) { eventsData[k].splice(idx, 1); if(eventsData[k].length === 0) delete eventsData[k]; localStorage.setItem('kmuttPhotoClubEvents', JSON.stringify(eventsData)); renderCalendar(); closeEventModal(); } }
+        
+        function deleteEvent(dateKey, index) { 
+            if(confirm('ลบกิจกรรม?')) { 
+                let dayEvents = Array.isArray(eventsData[dateKey]) ? eventsData[dateKey] : Object.values(eventsData[dateKey]);
+                dayEvents.splice(index, 1);
+                dayEvents = dayEvents.filter(e => e != null); // ล้างค่าว่าง
+                
+                if(dayEvents.length === 0) {
+                    db.ref('events/' + dateKey).remove();
+                } else {
+                    db.ref('events/' + dateKey).set(dayEvents);
+                }
+                closeEventModal(); 
+            } 
+        }
         document.getElementById('close-modal-btn').addEventListener('click', closeEventModal); document.getElementById('close-modal-icon').addEventListener('click', closeEventModal);
-        document.getElementById('save-event-btn').addEventListener('click', () => { const t = document.getElementById('event-title').value.trim(); if(t) { if(!eventsData[selectedDateKey]) eventsData[selectedDateKey] = []; eventsData[selectedDateKey].push({ title: t }); localStorage.setItem('kmuttPhotoClubEvents', JSON.stringify(eventsData)); renderCalendar(); closeEventModal(); } });
+        
+        document.getElementById('save-event-btn').addEventListener('click', () => { 
+            if(!db) { alert("กรุณาตั้งค่า Firebase Config ก่อนครับ"); return; }
+            const t = document.getElementById('event-title').value.trim(); 
+            if(t) { 
+                let dayEvents = eventsData[selectedDateKey] ? (Array.isArray(eventsData[selectedDateKey]) ? eventsData[selectedDateKey] : Object.values(eventsData[selectedDateKey])) : [];
+                dayEvents = dayEvents.filter(e => e != null); // ล้างค่าว่าง
+                dayEvents.push({ title: t }); 
+                db.ref('events/' + selectedDateKey).set(dayEvents).then(() => closeEventModal()); 
+            } 
+        });
     </script>
 </body>
 </html>
