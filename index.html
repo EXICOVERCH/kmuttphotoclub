@@ -637,12 +637,12 @@
                 if (isAdmin) hoverClass = 'cursor-pointer hover:bg-orange-50/50';
                 
                 const div = document.createElement('div'); 
-                div.className = `p-1 md:p-2 border-b border-r border-gray-100 relative ${isToday ? 'bg-orange-50/30' : 'bg-white'} group transition-colors duration-200`;
+                div.className = `p-1 md:p-2 border-b border-r border-gray-100 relative ${isToday ? 'bg-orange-50/30' : 'bg-white'} group transition-colors duration-200 flex flex-col h-full`;
                 
-                let html = `<span class="inline-flex justify-center items-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-medium ${isToday ? 'bg-brand text-white shadow-sm' : 'text-gray-700'}">${i}</span>`;
+                let html = `<div class="flex justify-center mb-1"><span class="inline-flex justify-center items-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-medium ${isToday ? 'bg-brand text-white shadow-sm' : 'text-gray-700'}">${i}</span></div>`;
                 
-                // คอนเทนเนอร์สำหรับงาน: มือถือเรียงแนวนอน (จุด), PC เรียงแนวตั้ง (กล่องข้อความ)
-                let evHTML = '<div class="mt-1 flex flex-wrap md:flex-col justify-center gap-1 md:space-y-1">'; 
+                // คอนเทนเนอร์สำหรับงาน: ปรับให้รองรับทั้งมือถือและ PC ให้ดูเป็นกล่องมากขึ้น
+                let evHTML = '<div class="flex-grow flex flex-col gap-0.5 md:gap-1 overflow-y-auto custom-scrollbar">'; 
                 let hasEvents = false;
 
                 if (eventsData[ds]) { 
@@ -654,13 +654,16 @@
                     dayEvents.forEach((ev, idx) => { 
                         if(!ev) return; 
                         
-                        // [UI สำหรับ PC] กล่องข้อความแบบเดิม (ซ่อนในจอมือถือ)
-                        evHTML += `<div class="hidden md:flex text-[10px] md:text-xs bg-brand text-white px-1.5 md:px-2 py-1 rounded shadow-sm justify-between items-center truncate"><span>${ev.title}</span>`; 
-                        if(isAdmin) evHTML += `<button class="ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; 
+                        // [UI ปรับใหม่] แสดงเป็นกล่องข้อความทั้งบนมือถือและ PC แต่ปรับขนาดตัวอักษรและ padding
+                        evHTML += `
+                        <div class="text-[9px] md:text-xs bg-brand/10 md:bg-brand text-brand md:text-white px-1 py-0.5 md:px-2 md:py-1 rounded-sm md:rounded shadow-sm flex justify-between items-center w-full overflow-hidden border border-brand/20 md:border-none">
+                            <span class="truncate block w-full text-center md:text-left">${ev.title}</span>`; 
+                        
+                        // ปุ่มลบสำหรับ Admin (ซ่อนในจอมือถือบางส่วนเพื่อประหยัดพื้นที่ หรือจะแสดงแค่ตอน Hover บน PC)
+                        if(isAdmin) {
+                            evHTML += `<button class="hidden md:flex ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; 
+                        }
                         evHTML += `</div>`; 
-
-                        // [UI สำหรับ มือถือ] จุดสีส้มเล็กๆ (ซ่อนในจอ PC)
-                        evHTML += `<div class="md:hidden w-2 h-2 rounded-full bg-brand shadow-sm"></div>`;
                     }); 
                 }
                 
