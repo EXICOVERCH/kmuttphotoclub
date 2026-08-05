@@ -76,14 +76,16 @@
             <div class="flex justify-between items-center h-16 md:h-20">
                 <a href="#" onclick="switchPage('home')" class="flex items-center gap-2 md:gap-3 group">
                     <img src="326739173_1839070083124543_4820509062487065087_n.png" alt="Logo" class="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform" onerror="this.src='https://placehold.co/40x40/FFFFFF/FF6600?text=KPC'">
-                    <span class="font-bold text-lg md:text-xl tracking-tight text-black transition-colors truncate">ชมรมศิลปะและการถ่ายภาพ</span>
+                    <span class="font-bold text-lg md:text-xl tracking-tight text-black transition-colors truncate" data-th="ชมรมศิลปะและการถ่ายภาพ" data-en="Kmutt Photo Club">ชมรมศิลปะและการถ่ายภาพ</span>
                 </a>
-                <div class="hidden md:flex space-x-8">
-                    <button onclick="switchPage('home')" class="nav-link text-brand font-semibold transition-colors focus:outline-none" data-page="home">หน้าแรก & ผลงาน</button>
-                    <button onclick="switchPage('pr')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="pr">ประชาสัมพันธ์</button>
-                    <button onclick="switchPage('schedule')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="schedule">ตารางงานชมรม</button>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <button onclick="switchPage('home')" class="nav-link text-brand font-semibold transition-colors focus:outline-none" data-page="home" data-th="หน้าแรก & ผลงาน" data-en="Home & Gallery">หน้าแรก & ผลงาน</button>
+                    <button onclick="switchPage('pr')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="pr" data-th="ประชาสัมพันธ์" data-en="PR & News">ประชาสัมพันธ์</button>
+                    <button onclick="switchPage('schedule')" class="nav-link text-gray-600 hover:text-brand font-medium transition-colors focus:outline-none" data-page="schedule" data-th="ตารางงานชมรม" data-en="Schedule">ตารางงานชมรม</button>
+                    <button onclick="toggleLanguage()" class="lang-btn-text font-bold text-gray-400 hover:text-brand transition-colors text-sm border-2 border-gray-200 hover:border-brand rounded-full px-3 py-1 bg-gray-50">EN</button>
                 </div>
-                <div class="md:hidden flex items-center">
+                <div class="md:hidden flex items-center gap-3">
+                    <button onclick="toggleLanguage()" class="lang-btn-text font-bold text-gray-400 hover:text-brand transition-colors text-xs border-2 border-gray-200 hover:border-brand rounded-full px-2.5 py-1 bg-gray-50">EN</button>
                     <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand focus:outline-none p-2 -mr-2">
                         <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
@@ -92,9 +94,9 @@
         </div>
         <div id="mobile-menu-panel" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
             <div class="px-4 pt-2 pb-4 space-y-2">
-                <button onclick="switchPage('home')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-brand bg-orange-50 rounded-xl" data-page="home">หน้าแรก & ผลงาน</button>
-                <button onclick="switchPage('pr')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-gray-800 hover:text-brand hover:bg-orange-50 rounded-xl" data-page="pr">ประชาสัมพันธ์</button>
-                <button onclick="switchPage('schedule')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-gray-800 hover:text-brand hover:bg-orange-50 rounded-xl" data-page="schedule">ตารางงานชมรม</button>
+                <button onclick="switchPage('home')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-brand bg-orange-50 rounded-xl" data-page="home" data-th="หน้าแรก & ผลงาน" data-en="Home & Gallery">หน้าแรก & ผลงาน</button>
+                <button onclick="switchPage('pr')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-gray-800 hover:text-brand hover:bg-orange-50 rounded-xl" data-page="pr" data-th="ประชาสัมพันธ์" data-en="PR & News">ประชาสัมพันธ์</button>
+                <button onclick="switchPage('schedule')" class="nav-link-mobile w-full text-left block px-4 py-3.5 text-base font-medium text-gray-800 hover:text-brand hover:bg-orange-50 rounded-xl" data-page="schedule" data-th="ตารางงานชมรม" data-en="Schedule">ตารางงานชมรม</button>
             </div>
         </div>
     </nav>
@@ -103,18 +105,18 @@
     <div id="view-home" class="page-view block pt-20 md:pt-24 flex-grow">
         <section class="py-16 md:py-32 px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
             <div class="inline-block mb-4 md:mb-6 px-4 py-1.5 rounded-full bg-orange-50 border border-brand/20">
-                <span class="text-brand font-medium text-xs md:text-sm tracking-wide">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</span>
+                <span class="text-brand font-medium text-xs md:text-sm tracking-wide" data-th="มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี" data-en="King Mongkut's University of Technology Thonburi">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</span>
             </div>
             <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 md:mb-6 text-black tracking-wider uppercase">
                 KMUTT PHOTO <span class="text-brand">CLUB</span>
             </h1>
-            <p class="text-gray-500 max-w-2xl text-base md:text-xl mb-8 md:mb-10 font-light leading-relaxed px-2">คอมมูนิตี้สำหรับคนรักศิลปะและภาพถ่าย พื้นที่ปล่อยของ แลกเปลี่ยนมุมมอง และร่วมสร้างสรรค์ผลงานไปด้วยกัน</p>
+            <p class="text-gray-500 max-w-2xl text-base md:text-xl mb-8 md:mb-10 font-light leading-relaxed px-2" data-th="คอมมูนิตี้สำหรับคนรักศิลปะและภาพถ่าย พื้นที่ปล่อยของ แลกเปลี่ยนมุมมอง และร่วมสร้างสรรค์ผลงานไปด้วยกัน" data-en="A community for art and photography lovers. A space to showcase, share perspectives, and create together.">คอมมูนิตี้สำหรับคนรักศิลปะและภาพถ่าย พื้นที่ปล่อยของ แลกเปลี่ยนมุมมอง และร่วมสร้างสรรค์ผลงานไปด้วยกัน</p>
         </section>
         <section class="py-8 md:py-12 bg-gray-50 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8 md:mb-10">
-                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">ผลงานของเรา</h2>
-                    <p class="text-gray-500 text-sm md:text-base">ประมวลภาพกิจกรรมและผลงานสร้างสรรค์จากสมาชิกชมรม</p>
+                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4" data-th="ผลงานของเรา" data-en="Our Works">ผลงานของเรา</h2>
+                    <p class="text-gray-500 text-sm md:text-base" data-th="ประมวลภาพกิจกรรมและผลงานสร้างสรรค์จากสมาชิกชมรม" data-en="Collection of activities and creative works from our members">ประมวลภาพกิจกรรมและผลงานสร้างสรรค์จากสมาชิกชมรม</p>
                 </div>
                 <div class="masonry-gallery" id="gallery-grid"></div>
             </div>
@@ -125,12 +127,12 @@
     <div id="view-pr" class="page-view hidden pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 min-h-screen flex-grow">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8 md:mb-10 relative">
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4">ประชาสัมพันธ์</h2>
-                <p class="text-gray-500 text-base md:text-xl">ข่าวสาร กิจกรรม และประกาศสำคัญจากชมรม</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4" data-th="ประชาสัมพันธ์" data-en="PR & News">ประชาสัมพันธ์</h2>
+                <p class="text-gray-500 text-base md:text-xl" data-th="ข่าวสาร กิจกรรม และประกาศสำคัญจากชมรม" data-en="News, activities, and important announcements">ข่าวสาร กิจกรรม และประกาศสำคัญจากชมรม</p>
                 <div id="admin-add-pr-container" class="hidden mt-6 md:absolute md:top-0 md:right-0 md:mt-2">
                     <button onclick="openCreatePRModal()" class="bg-brand hover:bg-brand-dark text-white font-semibold py-2 px-4 rounded-full shadow-md shadow-brand/30 flex items-center justify-center gap-2 transition-transform hover:scale-105 mx-auto">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        สร้างประกาศใหม่
+                        <span data-th="สร้างประกาศใหม่" data-en="Create Post">สร้างประกาศใหม่</span>
                     </button>
                 </div>
             </div>
@@ -144,13 +146,13 @@
                         <div class="w-full md:w-1/2 h-64 md:h-auto relative overflow-hidden bg-gray-100">
                             <img src="pr/เปิดรับสมัคร/Photoclub Coming Soon.png" alt="รับสมัครสมาชิก" class="w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/f8fafc/FF6600?text=รับสมัครสมาชิก'">
                             <div class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold text-white shadow-lg flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> ประกาศสำคัญ
+                                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> <span data-th="ประกาศสำคัญ" data-en="Important">ประกาศสำคัญ</span>
                             </div>
                         </div>
                         <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-brand transition-colors">เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club</h3>
-                            <p class="text-gray-600 text-base md:text-lg mb-8 line-clamp-3">เปิดโอกาสให้เพื่อนๆ พี่ๆ น้อง ๆ นักศึกษาชาว มจธ. ทุกชั้นปี มาร่วมเป็นส่วนหนึ่งของครอบครัวชมรมพวกเรา</p>
-                            <div class="flex items-center text-brand font-semibold text-lg">คลิกเพื่ออ่านรายละเอียดและสมัคร <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-brand transition-colors" data-th="เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club" data-en="Club Member Recruitment<br>KMUTT Photo Club">เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club</h3>
+                            <p class="text-gray-600 text-base md:text-lg mb-8 line-clamp-3" data-th="เปิดโอกาสให้เพื่อนๆ พี่ๆ น้อง ๆ นักศึกษาชาว มจธ. ทุกชั้นปี มาร่วมเป็นส่วนหนึ่งของครอบครัวชมรมพวกเรา" data-en="We welcome all KMUTT students from any year to join our photography club family.">เปิดโอกาสให้เพื่อนๆ พี่ๆ น้อง ๆ นักศึกษาชาว มจธ. ทุกชั้นปี มาร่วมเป็นส่วนหนึ่งของครอบครัวชมรมพวกเรา</p>
+                            <div class="flex items-center text-brand font-semibold text-lg"><span data-th="คลิกเพื่ออ่านรายละเอียดและสมัคร" data-en="Click to read details and apply">คลิกเพื่ออ่านรายละเอียดและสมัคร</span> <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></div>
                         </div>
                     </div>
                 </article>
@@ -159,23 +161,23 @@
                     <article class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer group" onclick="openPR('pr-gallery')">
                         <div class="h-56 relative overflow-hidden bg-gray-100">
                             <img src="pr/วิศวะ67/1.png" alt="ประมวลภาพ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/f8fafc/FF6600?text=ประมวลภาพ'">
-                            <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-gray-800 shadow-sm">📸 ประมวลภาพกิจกรรม</div>
+                            <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-gray-800 shadow-sm" data-th="📸 ประมวลภาพกิจกรรม" data-en="📸 Event Gallery">📸 ประมวลภาพกิจกรรม</div>
                         </div>
                         <div class="p-6 md:p-8 flex-grow flex flex-col">
-                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand transition-colors">ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67</h3>
-                            <p class="text-gray-600 text-sm md:text-base mb-6 flex-grow line-clamp-2">รวบรวมภาพบรรยากาศรอยยิ้มและความประทับใจในงานปฐมนิเทศน้องใหม่คณะวิศวกรรมศาสตร์ รุ่นที่ 67</p>
-                            <div class="text-brand font-medium text-sm flex items-center">เปิดดูอัลบั้มภาพ <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand transition-colors" data-th="ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67" data-en="Engineering Orientation Gen 67 Gallery">ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67</h3>
+                            <p class="text-gray-600 text-sm md:text-base mb-6 flex-grow line-clamp-2" data-th="รวบรวมภาพบรรยากาศรอยยิ้มและความประทับใจในงานปฐมนิเทศน้องใหม่คณะวิศวกรรมศาสตร์ รุ่นที่ 67" data-en="Collecting smiles and memorable moments from the Engineering Orientation Gen 67 event.">รวบรวมภาพบรรยากาศรอยยิ้มและความประทับใจในงานปฐมนิเทศน้องใหม่คณะวิศวกรรมศาสตร์ รุ่นที่ 67</p>
+                            <div class="text-brand font-medium text-sm flex items-center"><span data-th="เปิดดูอัลบั้มภาพ" data-en="View Album">เปิดดูอัลบั้มภาพ</span> <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
                         </div>
                     </article>
                     <article class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer group" onclick="openPR('pr-soon')">
                         <div class="h-56 relative overflow-hidden bg-gray-100 flex justify-center items-center">
                             <img src="pr/Coming Soon/03.08.2026.png" alt="Coming Soon" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" onerror="this.src='https://placehold.co/800x600/f8fafc/FF6600?text=Coming+Soon'">
-                            <div class="absolute top-4 left-4 bg-brand px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm">🚀 เร็วๆ นี้</div>
+                            <div class="absolute top-4 left-4 bg-brand px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm" data-th="🚀 เร็วๆ นี้" data-en="🚀 Coming Soon">🚀 เร็วๆ นี้</div>
                         </div>
                         <div class="p-6 md:p-8 flex-grow flex flex-col">
-                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand transition-colors">เตรียมพบกับโปรเจกต์ใหม่จากชมรม</h3>
-                            <p class="text-gray-600 text-sm md:text-base mb-6 flex-grow line-clamp-2">นับถอยหลังอีกไม่นาน ⏳✨ ชมรมศิลปะและการถ่ายภาพ (Kmutt Photo Club) กำลังจะเปิดรับสมัครสมาชิกใหม่แล้ว 📸</p>
-                            <div class="text-brand font-medium text-sm flex items-center">ดูรายละเอียด <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand transition-colors" data-th="เตรียมพบกับโปรเจกต์ใหม่จากชมรม" data-en="Get ready for our new project">เตรียมพบกับโปรเจกต์ใหม่จากชมรม</h3>
+                            <p class="text-gray-600 text-sm md:text-base mb-6 flex-grow line-clamp-2" data-th="นับถอยหลังอีกไม่นาน ⏳✨ ชมรมศิลปะและการถ่ายภาพ (Kmutt Photo Club) กำลังจะเปิดรับสมัครสมาชิกใหม่แล้ว 📸" data-en="Counting down! ⏳✨ KMUTT Photo Club will soon open for new member registration 📸">นับถอยหลังอีกไม่นาน ⏳✨ ชมรมศิลปะและการถ่ายภาพ (Kmutt Photo Club) กำลังจะเปิดรับสมัครสมาชิกใหม่แล้ว 📸</p>
+                            <div class="text-brand font-medium text-sm flex items-center"><span data-th="ดูรายละเอียด" data-en="View Details">ดูรายละเอียด</span> <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
                         </div>
                     </article>
                 </div>
@@ -193,7 +195,7 @@
             <!-- Dynamic PR (โหลดจาก Firebase) -->
             <div id="content-pr-dynamic" class="pr-content-block hidden flex-col">
                 <div class="p-6 md:p-10 text-center border-b border-gray-100 bg-white rounded-t-3xl">
-                    <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-bold mb-4">📰 ข่าวประชาสัมพันธ์</span>
+                    <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-bold mb-4" data-th="📰 ข่าวประชาสัมพันธ์" data-en="📰 News">📰 ข่าวประชาสัมพันธ์</span>
                     <h2 id="dynamic-modal-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">หัวข้อข่าว</h2>
                 </div>
                 <div class="p-6 md:p-10 bg-gray-50 flex flex-col items-center gap-8 rounded-b-3xl">
@@ -212,14 +214,14 @@
             <!-- Static PRs -->
             <div id="content-pr-recruit" class="pr-content-block hidden flex-col">
                 <div class="p-6 md:p-10 text-center border-b border-gray-100">
-                    <span class="inline-block px-4 py-1.5 bg-red-50 text-red-600 rounded-full text-sm font-bold mb-4">📍 ประกาศสำคัญ</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club</h2>
+                    <span class="inline-block px-4 py-1.5 bg-red-50 text-red-600 rounded-full text-sm font-bold mb-4" data-th="📍 ประกาศสำคัญ" data-en="📍 Important">📍 ประกาศสำคัญ</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4" data-th="เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club" data-en="Club Member Recruitment<br>KMUTT Photo Club">เปิดรับสมัครสมาชิกชมรม<br>KMUTT Photo Club</h2>
                     
-                    <p class="text-gray-600 text-lg mb-6">ไม่ต้องกังวลว่าจะถ่ายรูปไม่เก่ง หรือยังถ่ายไม่สวย ขอแค่มี "ใจรัก" และพร้อมที่จะเรียนรู้ไปพร้อมๆ กัน ก็สมัครมาได้เลย</p>
+                    <p class="text-gray-600 text-lg mb-6" data-th="ไม่ต้องกังวลว่าจะถ่ายรูปไม่เก่ง หรือยังถ่ายไม่สวย ขอแค่มี &quot;ใจรัก&quot; และพร้อมที่จะเรียนรู้ไปพร้อมๆ กัน ก็สมัครมาได้เลย" data-en="Don't worry if you are not an expert or lack experience. Just bring your passion and learn with us. Apply now!">ไม่ต้องกังวลว่าจะถ่ายรูปไม่เก่ง หรือยังถ่ายไม่สวย ขอแค่มี "ใจรัก" และพร้อมที่จะเรียนรู้ไปพร้อมๆ กัน ก็สมัครมาได้เลย</p>
                     
                     <!-- ปุ่มสำหรับกรอกใบสมัคร -->
                     <a href="https://forms.gle/n2Cbt6F6HHRzKyAG8" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-brand/30 transition-transform hover:scale-105 gap-2 mx-auto">
-                        📝 กรอกใบสมัครที่นี่
+                        <span data-th="📝 กรอกใบสมัครที่นี่" data-en="📝 Apply Here">📝 กรอกใบสมัครที่นี่</span>
                     </a>
 
                 </div>
@@ -233,8 +235,8 @@
             </div>
             <div id="content-pr-gallery" class="pr-content-block hidden flex-col h-full min-h-[75vh]">
                 <div class="p-6 md:p-8 border-b border-gray-100 shrink-0 text-center relative z-20 bg-white rounded-t-3xl">
-                    <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-xs md:text-sm font-semibold mb-3">📸 อัลบั้มภาพประทับใจ</span>
-                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2">ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67</h2>
+                    <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-xs md:text-sm font-semibold mb-3" data-th="📸 อัลบั้มภาพประทับใจ" data-en="📸 Photo Album">📸 อัลบั้มภาพประทับใจ</span>
+                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2" data-th="ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67" data-en="Engineering Orientation Gen 67 Gallery">ประมวลภาพ ปฐมนิเทศคณะวิศวกรรมศาสตร์ รุ่นที่ 67</h2>
                 </div>
                 <div class="flex-grow flex flex-col items-center justify-center relative bg-gray-50 rounded-b-3xl p-4 md:p-10">
                     <div class="relative w-full max-w-5xl h-[50vh] md:h-[65vh] flex items-center justify-center group">
@@ -255,41 +257,41 @@
     <div id="pr-create-modal" class="hidden fixed inset-0 z-[120] bg-gray-900/60 backdrop-blur-sm justify-center items-center p-4">
         <div class="bg-white rounded-3xl w-full max-w-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
             <div class="px-6 py-4 bg-orange-50 border-b border-orange-100 flex justify-between items-center shrink-0">
-                <h3 class="text-xl font-bold text-brand">สร้างข่าวประชาสัมพันธ์ใหม่</h3>
+                <h3 class="text-xl font-bold text-brand" data-th="สร้างข่าวประชาสัมพันธ์ใหม่" data-en="Create New Announcement">สร้างข่าวประชาสัมพันธ์ใหม่</h3>
                 <button onclick="closeCreatePRModal()" class="text-gray-400 hover:text-red-500 p-1 rounded-full transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <div class="p-6 overflow-y-auto custom-scrollbar flex-grow space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">หัวข้อข่าว *</label>
-                    <input type="text" id="pr-input-title" placeholder="เช่น กิจกรรมประกวดถ่ายภาพ..." class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base">
+                    <label class="block text-sm font-medium text-gray-700 mb-1" data-th="หัวข้อข่าว *" data-en="News Title *">หัวข้อข่าว *</label>
+                    <input type="text" id="pr-input-title" data-th="เช่น กิจกรรมประกวดถ่ายภาพ..." data-en="e.g., Photo Contest..." placeholder="เช่น กิจกรรมประกวดถ่ายภาพ..." class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">คำอธิบายสั้นๆ (แสดงหน้าปก) *</label>
-                    <textarea id="pr-input-short" rows="2" placeholder="อธิบายย่อๆ 1-2 บรรทัด" class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" data-th="คำอธิบายสั้นๆ (แสดงหน้าปก) *" data-en="Short Description (Cover) *">คำอธิบายสั้นๆ (แสดงหน้าปก) *</label>
+                    <textarea id="pr-input-short" rows="2" data-th="อธิบายย่อๆ 1-2 บรรทัด" data-en="Brief description 1-2 lines" placeholder="อธิบายย่อๆ 1-2 บรรทัด" class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
                 </div>
                 <div class="bg-white border border-gray-200 rounded-xl p-4">
-                    <label class="block text-sm font-medium text-gray-900 mb-2">แนบรูปภาพ (อัปโหลดได้ทีละหลายรูป) 📸</label>
+                    <label class="block text-sm font-medium text-gray-900 mb-2" data-th="แนบรูปภาพ (อัปโหลดได้ทีละหลายรูป) 📸" data-en="Attach Images (Multiple allowed) 📸">แนบรูปภาพ (อัปโหลดได้ทีละหลายรูป) 📸</label>
                     <div class="relative border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:bg-gray-50 transition-colors">
                         <input type="file" id="pr-input-file" accept="image/*" multiple class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                         <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                        <p class="mt-2 text-sm text-gray-600">คลิกที่นี่ หรือ ลากไฟล์รูปภาพมาวาง</p>
-                        <p class="text-xs text-gray-500 mt-1">(สามารถคลุมดำเลือกหลายๆ รูปพร้อมกันได้ สูงสุด 32MB/รูป)</p>
+                        <p class="mt-2 text-sm text-gray-600" data-th="คลิกที่นี่ หรือ ลากไฟล์รูปภาพมาวาง" data-en="Click here or drag images to upload">คลิกที่นี่ หรือ ลากไฟล์รูปภาพมาวาง</p>
+                        <p class="text-xs text-gray-500 mt-1" data-th="(สามารถคลุมดำเลือกหลายๆ รูปพร้อมกันได้ สูงสุด 32MB/รูป)" data-en="(Select multiple images, Max 32MB/image)">(สามารถคลุมดำเลือกหลายๆ รูปพร้อมกันได้ สูงสุด 32MB/รูป)</p>
                     </div>
                     <div id="pr-preview-container" class="hidden mt-4">
-                        <p class="text-xs font-semibold text-gray-600 mb-2 border-b pb-1">รูปที่เลือกไว้ (<span id="pr-preview-count">0</span> รูป):</p>
+                        <p class="text-xs font-semibold text-gray-600 mb-2 border-b pb-1"><span data-th="รูปที่เลือกไว้ (" data-en="Selected (">รูปที่เลือกไว้ (</span><span id="pr-preview-count">0</span><span data-th=" รูป):" data-en=" images):"> รูป):</span></p>
                         <div id="pr-preview-grid" class="flex flex-wrap gap-3 max-h-48 overflow-y-auto custom-scrollbar p-1"></div>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">รายละเอียดแบบเต็ม (แสดงเมื่อกดเข้าไปอ่าน)</label>
-                    <textarea id="pr-input-full" rows="5" placeholder="พิมพ์เนื้อหา กติกา วันเวลา สถานที่..." class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" data-th="รายละเอียดแบบเต็ม (แสดงเมื่อกดเข้าไปอ่าน)" data-en="Full Details (Shown when clicked)">รายละเอียดแบบเต็ม (แสดงเมื่อกดเข้าไปอ่าน)</label>
+                    <textarea id="pr-input-full" rows="5" data-th="พิมพ์เนื้อหา กติกา วันเวลา สถานที่..." data-en="Enter full content, rules, time, location..." placeholder="พิมพ์เนื้อหา กติกา วันเวลา สถานที่..." class="w-full border border-gray-200 bg-gray-50 p-3 rounded-xl focus:ring-2 focus:ring-brand outline-none text-base"></textarea>
                 </div>
             </div>
             <div class="p-4 border-t border-gray-100 flex justify-end gap-3 shrink-0 bg-gray-50">
-                <button onclick="closeCreatePRModal()" class="px-5 py-2.5 text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 font-medium rounded-xl transition-colors">ยกเลิก</button>
+                <button onclick="closeCreatePRModal()" class="px-5 py-2.5 text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 font-medium rounded-xl transition-colors" data-th="ยกเลิก" data-en="Cancel">ยกเลิก</button>
                 <button id="save-pr-btn" onclick="savePRPost()" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-medium rounded-xl shadow-md flex items-center gap-2 transition-colors">
                     <svg id="pr-loading-spinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                    <span id="save-pr-text">โพสต์ประกาศ</span>
+                    <span id="save-pr-text" data-th="โพสต์ประกาศ" data-en="Post">โพสต์ประกาศ</span>
                 </button>
             </div>
         </div>
@@ -299,8 +301,8 @@
     <div id="view-schedule" class="page-view hidden pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 min-h-screen flex-grow">
         <div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="text-center mb-8 md:mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-2 md:mb-4">ตารางงานชมรม</h2>
-                <div id="admin-status-banner" class="hidden inline-block px-4 py-2 rounded-full bg-green-100 border border-green-300 text-green-800 font-medium text-xs md:text-sm mb-4 mx-2 shadow-sm">🔓 โหมดผู้ดูแลระบบ (Admin) - คลิกที่วันที่เพื่อเพิ่มงาน</div>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-2 md:mb-4" data-th="ตารางงานชมรม" data-en="Club Schedule">ตารางงานชมรม</h2>
+                <div id="admin-status-banner" class="hidden inline-block px-4 py-2 rounded-full bg-green-100 border border-green-300 text-green-800 font-medium text-xs md:text-sm mb-4 mx-2 shadow-sm" data-th="🔓 โหมดผู้ดูแลระบบ (Admin) - คลิกที่วันที่เพื่อเพิ่มงาน" data-en="🔓 Admin Mode - Click a date to add an event">🔓 โหมดผู้ดูแลระบบ (Admin) - คลิกที่วันที่เพื่อเพิ่มงาน</div>
             </div>
             <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg border border-gray-100 overflow-hidden mx-2 md:mx-0">
                 <div class="flex items-center justify-between px-4 md:px-6 py-4 bg-gradient-to-r from-orange-50 to-white border-b border-gray-100">
@@ -309,8 +311,8 @@
                     <button id="next-month" class="p-3 text-gray-600 hover:text-brand hover:bg-white rounded-full"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></button>
                 </div>
                 <div class="w-full">
-                    <div class="grid grid-cols-7 border-b border-gray-100 bg-gray-50 text-center text-xs md:text-sm font-semibold py-2 md:py-4">
-                        <div class="text-red-500">อา.</div><div class="text-gray-700">จ.</div><div class="text-gray-700">อ.</div><div class="text-gray-700">พ.</div><div class="text-gray-700">พฤ.</div><div class="text-gray-700">ศ.</div><div class="text-blue-500">ส.</div>
+                    <div id="calendar-days-header" class="grid grid-cols-7 border-b border-gray-100 bg-gray-50 text-center text-xs md:text-sm font-semibold py-2 md:py-4">
+                        <!-- Gen from JS -->
                     </div>
                     <div id="calendar-body" class="grid grid-cols-7 bg-white auto-rows-[minmax(80px,auto)] md:auto-rows-[minmax(120px,auto)]"></div>
                 </div>
@@ -322,21 +324,21 @@
     <div id="event-modal" class="hidden fixed inset-0 bg-gray-900/60 z-[120] flex justify-center items-center backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-md shadow-2xl transform transition-transform scale-95" id="event-modal-content">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl md:text-2xl font-bold text-gray-800">จัดการงานชมรม</h3>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800" data-th="จัดการงานชมรม" data-en="Manage Event">จัดการงานชมรม</h3>
                 <button id="close-modal-icon" class="text-gray-400 hover:text-red-500 p-1 bg-gray-50 rounded-full"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <p id="modal-date-text" class="text-sm md:text-base text-brand font-semibold mb-5 bg-orange-50 px-4 py-2.5 rounded-xl border border-brand/10"></p>
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-2">เพิ่มกิจกรรมใหม่</label>
-                <input type="text" id="event-title" placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-th="เพิ่มกิจกรรมใหม่" data-en="Add New Event">เพิ่มกิจกรรมใหม่</label>
+                <input type="text" id="event-title" data-th="เช่น ทริปถ่ายภาพ, ประชุมชมรม" data-en="e.g., Photo Trip, Meeting" placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
             </div>
             <div id="existing-events-container" class="mb-6 hidden">
-                <label class="block text-sm font-medium text-gray-700 mb-2">กิจกรรมที่มีอยู่:</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-th="กิจกรรมที่มีอยู่:" data-en="Existing Events:">กิจกรรมที่มีอยู่:</label>
                 <ul id="existing-events-list" class="space-y-2 max-h-40 overflow-y-auto pr-2"></ul>
             </div>
             <div class="flex justify-end gap-2 mt-2">
-                <button id="close-modal-btn" class="px-5 py-2.5 text-gray-600 bg-gray-100 hover:bg-gray-200 font-semibold rounded-xl w-full md:w-auto">ปิด</button>
-                <button id="save-event-btn" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl w-full md:w-auto">เพิ่มกิจกรรม</button>
+                <button id="close-modal-btn" class="px-5 py-2.5 text-gray-600 bg-gray-100 hover:bg-gray-200 font-semibold rounded-xl w-full md:w-auto" data-th="ปิด" data-en="Close">ปิด</button>
+                <button id="save-event-btn" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl w-full md:w-auto" data-th="เพิ่มกิจกรรม" data-en="Add Event">เพิ่มกิจกรรม</button>
             </div>
         </div>
     </div>
@@ -345,7 +347,7 @@
     <div id="view-event-modal" class="hidden fixed inset-0 bg-gray-900/60 z-[120] flex justify-center items-center backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-sm shadow-2xl transform transition-transform scale-95" id="view-event-modal-content">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl md:text-2xl font-bold text-gray-800">รายละเอียดงาน</h3>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800" data-th="รายละเอียดงาน" data-en="Event Details">รายละเอียดงาน</h3>
                 <button onclick="closeViewEventModal()" class="text-gray-400 hover:text-red-500 p-1 bg-gray-50 rounded-full"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <p id="view-modal-date-text" class="text-sm md:text-base text-brand font-semibold mb-5 bg-orange-50 px-4 py-2.5 rounded-xl border border-brand/10 text-center"></p>
@@ -353,7 +355,7 @@
                 <!-- รายการงานจะถูกเพิ่มตรงนี้ผ่าน JS -->
             </div>
             <div class="flex justify-end mt-6">
-                <button onclick="closeViewEventModal()" class="px-5 py-2.5 text-white bg-brand hover:bg-brand-dark shadow-md font-semibold rounded-xl w-full">ปิดหน้าต่าง</button>
+                <button onclick="closeViewEventModal()" class="px-5 py-2.5 text-white bg-brand hover:bg-brand-dark shadow-md font-semibold rounded-xl w-full" data-th="ปิดหน้าต่าง" data-en="Close Window">ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>
@@ -366,6 +368,15 @@
         <img id="lightbox-img" src="" alt="Full Screen" class="max-w-full max-h-[85vh] object-contain rounded-md">
     </div>
 
+    <!-- Custom Alert/Confirm/Prompt Dialog -->
+    <div id="custom-dialog" class="hidden fixed inset-0 z-[9999] bg-gray-900/80 backdrop-blur-sm flex justify-center items-center p-4">
+        <div id="custom-dialog-content" class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 flex flex-col">
+            <h3 id="custom-dialog-title" class="text-xl md:text-2xl font-bold text-gray-900 mb-2"></h3>
+            <div id="custom-dialog-message-container" class="text-gray-600 mb-6 text-sm md:text-base leading-relaxed"></div>
+            <div id="custom-dialog-actions" class="flex justify-end gap-3 mt-auto"></div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white pt-12 pb-6 md:pb-8 border-t-4 border-brand mt-auto w-full pb-[env(safe-area-inset-bottom)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -375,21 +386,21 @@
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <div class="flex gap-4">
                         <!-- Facebook Icon -->
-                        <a href="https://www.facebook.com/KMUTTPHOTOCLUB" target="_blank" class="text-gray-400 hover:text-brand transition-colors" title="Facebook">
+                        <a href="#" target="_blank" class="text-gray-400 hover:text-brand transition-colors" title="Facebook">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         </a>
                         <!-- Instagram Icon -->
-                        <a href="https://www.instagram.com/kmuttphotoclub/" target="_blank" class="text-gray-400 hover:text-brand transition-colors" title="Instagram">
+                        <a href="#" target="_blank" class="text-gray-400 hover:text-brand transition-colors" title="Instagram">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
                     </div>
-                    <p class="text-gray-500 text-xs text-center md:text-left">&copy; 2026 ชมรมศิลปะและการถ่ายภาพ มจธ.</p>
+                    <p class="text-gray-500 text-xs text-center md:text-left">&copy; <span data-th="2026 ชมรมศิลปะและการถ่ายภาพ มจธ." data-en="2026 KMUTT Photo Club">2026 ชมรมศิลปะและการถ่ายภาพ มจธ.</span></p>
                 </div>
 
                 <!-- Right: Contacts & Admin -->
                 <div class="flex flex-col md:flex-row items-center gap-4 text-xs text-gray-400 mt-4 xl:mt-0">
                     <div class="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
-                        <span>หรือติดต่อ :</span>
+                        <span data-th="หรือติดต่อ :" data-en="Or Contact :">หรือติดต่อ :</span>
                         <div class="flex flex-wrap justify-center gap-x-3 gap-y-1">
                             <a href="https://instagram.com/bas.jaturawit" target="_blank" class="hover:text-brand transition-colors">IG : (k'บาส) bas.jaturawit</a>
                             <span class="hidden md:inline text-gray-700">|</span>
@@ -403,7 +414,7 @@
                     
                     <button onclick="toggleAdminLogin()" id="admin-toggle-btn" class="text-gray-500 hover:text-brand font-medium flex items-center gap-1.5 p-1 transition-colors mt-2 md:mt-0">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        <span id="admin-toggle-text">ผู้ดูแลระบบ</span>
+                        <span id="admin-toggle-text" data-th="ผู้ดูแลระบบ" data-en="Admin">ผู้ดูแลระบบ</span>
                     </button>
                 </div>
                 
@@ -413,10 +424,117 @@
 
     <script>
         // ==========================================
+        // 🌐 0. ระบบแปลภาษา (Bilingual System)
+        // ==========================================
+        let currentLang = localStorage.getItem('kpc_lang') || 'th';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'th' ? 'en' : 'th';
+            localStorage.setItem('kpc_lang', currentLang);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            document.documentElement.lang = currentLang;
+            
+            // Update Toggle Buttons
+            document.querySelectorAll('.lang-btn-text').forEach(btn => {
+                btn.textContent = currentLang === 'th' ? 'EN' : 'TH';
+            });
+
+            // Update all elements with data-th and data-en attributes
+            document.querySelectorAll('[data-th]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = text;
+                    } else {
+                        el.innerHTML = text;
+                    }
+                }
+            });
+
+            // Re-render components that depend on language
+            updateAdminUI();
+            if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
+        }
+
+        // ==========================================
+        // 💬 0.1 Custom Dialog (แทนที่ alert/confirm/prompt)
+        // ==========================================
+        function showDialog(title, message, type = 'alert', onConfirm = null) {
+            const dialog = document.getElementById('custom-dialog');
+            const content = document.getElementById('custom-dialog-content');
+            document.getElementById('custom-dialog-title').textContent = title;
+            
+            const msgContainer = document.getElementById('custom-dialog-message-container');
+            msgContainer.innerHTML = `<p>${message}</p>`;
+
+            const actions = document.getElementById('custom-dialog-actions');
+            actions.innerHTML = '';
+
+            // สร้างปุ่มยกเลิก (Cancel)
+            if (type === 'confirm' || type === 'prompt') {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'px-5 py-2.5 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium transition-colors';
+                cancelBtn.textContent = currentLang === 'th' ? 'ยกเลิก' : 'Cancel';
+                cancelBtn.onclick = closeDialog;
+                actions.appendChild(cancelBtn);
+            }
+
+            // สร้างช่องกรอกรหัสผ่าน (Prompt)
+            if (type === 'prompt') {
+                const input = document.createElement('input');
+                input.type = 'password';
+                input.id = 'dialog-prompt-input';
+                input.className = 'w-full border border-gray-300 p-3 rounded-xl mt-4 focus:ring-2 focus:ring-brand outline-none';
+                input.placeholder = currentLang === 'th' ? 'ใส่รหัสผ่าน...' : 'Enter password...';
+                msgContainer.appendChild(input);
+                
+                // Allow Enter key
+                setTimeout(() => {
+                    input.focus();
+                    input.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') confirmAction();
+                    });
+                }, 50);
+            }
+
+            // สร้างปุ่มตกลง (OK/Confirm)
+            const confirmBtn = document.createElement('button');
+            confirmBtn.className = 'px-5 py-2.5 bg-brand text-white hover:bg-brand-dark rounded-xl font-medium transition-colors shadow-md shadow-brand/20';
+            confirmBtn.textContent = currentLang === 'th' ? 'ตกลง' : 'OK';
+            const confirmAction = () => {
+                let val = null;
+                if (type === 'prompt') val = document.getElementById('dialog-prompt-input').value;
+                closeDialog();
+                if (onConfirm) onConfirm(val);
+            };
+            confirmBtn.onclick = confirmAction;
+            actions.appendChild(confirmBtn);
+
+            dialog.classList.remove('hidden');
+            dialog.classList.add('flex');
+            setTimeout(() => {
+                dialog.classList.remove('opacity-0');
+                content.classList.replace('scale-95', 'scale-100');
+            }, 10);
+        }
+
+        function closeDialog() {
+            const dialog = document.getElementById('custom-dialog');
+            const content = document.getElementById('custom-dialog-content');
+            dialog.classList.add('opacity-0');
+            content.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => {
+                dialog.classList.add('hidden');
+                dialog.classList.remove('flex');
+            }, 300);
+        }
+
+        // ==========================================
         // 🚀 1. การตั้งค่า Firebase (Database)
         // ==========================================
-        
-        // เราใช้ Firebase SDK v8 (CDN) ดังนั้น syntax การเชื่อมต่อจะเป็นดังนี้
         const firebaseConfig = {
             apiKey: "AIzaSyBw6R4BOCsPz4GWo01GLBNMh1VBcuWXkKI",
             authDomain: "kmuttphotoclub-f1eb3.firebaseapp.com",
@@ -428,19 +546,18 @@
             measurementId: "G-8FDPP8EQSP"
         };
 
-        // เริ่มต้นการทำงานของ Firebase
         let db;
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.database();
-            console.log("Firebase Realtime Database Connected!");
+            console.log("Firebase Connected!");
         } catch (error) {
-            console.error("Firebase Initialization Error:", error);
-            alert("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง");
+            console.error("Firebase Error:", error);
+            showDialog(currentLang === 'th' ? 'แจ้งเตือน' : 'Notice', currentLang === 'th' ? 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้' : 'Database connection failed.');
         }
 
         // ==========================================
-        // 🌟 2. ระบบ Gallery 
+        // 🌟 2. ระบบ Gallery
         // ==========================================
         const pinnedPhotoboothImages = [ "img/20260607_140233100.jpg", "img/20260607_141925241.jpg", "img/20260607_153702375.jpg", "img/20260607_155146081.jpg", "img/20260607_161013995.jpg" ];
         const allGalleryImages = [ "img/PRM05809-Enhanced-NR.jpg", "img/PRM00844.jpg", "img/PRM00585.jpg", "img/PRM00002.jpg", "img/pannawat_tay-5979.jpg", "img/pannawat_tay-5969.jpg", "img/pannawat_tay-5942 (1).jpg", "img/pannawat_tay-5397.jpg", "img/pannawat_tay-0370.jpg", "img/pannawat_tay-0368.jpg", "img/pannawat_tay-0281.JPG", "img/pannawat_tay-0223.JPG", "img/pannawat_tay-0107.JPG", "img/pannawat_tay-1-349.JPG", "img/pannawat_tay-1-333.JPG", "img/KMU_2928.jpg", "img/IMG_9994.jpg", "img/IMG_9961.jpg", "img/IMG_9946.jpg", "img/IMG_9888.jpg", "img/IMG_8250.jpg", "img/IMG_8226.jpg", "img/IMG_7872.jpg", "img/IMG_7862.jpg", "img/IMG_7404.jpg", "img/IMG_7259.jpg", "img/IMG_7142.jpg", "img/IMG_7061.jpg", "img/IMG_7053.jpg", "img/IMG_6265.jpg", "img/IMG_6212.jpg", "img/IMG_6152.jpg", "img/IMG_6047.jpg", "img/IMG_5996.jpg", "img/IMG_5921.jpg", "img/IMG_5693.jpg", "img/IMG_5689.jpg", "img/IMG_5380.jpg", "img/IMG_5057.jpg", "img/IMG_5000.jpg", "img/IMG_4921.jpg", "img/IMG_4503.JPG", "img/IMG_4160.JPG", "img/IMG_4055.JPG", "img/IMG_4039.JPG", "img/IMG_2976.jpg", "img/IMG_2772.jpg", "img/IMG_2484.jpg", "img/IMG_2480.jpg", "img/IMG_2408.JPG", "img/IMG_1731.jpg", "img/IMG_1635.jpg", "img/IMG_1628.jpg", "img/IMG_1569.jpg", "img/IMG_1467.jpg", "img/IMG_1266.jpg", "img/IMG_1264.jpg", "img/IMG_1075.jpg", "img/IMG_1044.jpg", "img/IMG_0963.jpg", "img/IMG_0949.jpg", "img/IMG_0820.jpg", "img/IMG_0810.jpg", "img/IMG_0808.jpg", "img/IMG_0807.jpg", "img/IMG_0771.jpg", "img/IMG_0762.jpg", "img/IMG_0719.jpg", "img/IMG_0665.jpg", "img/IMG_0646.jpg", "img/IMG_0544.jpg", "img/IMG_0509.jpg", "img/IMG_0416.jpg", "img/IMG_0415.jpg", "img/IMG_0258.jpg", "img/IMG_0239.jpg", "img/DSCF7378.jpg", "img/DSCF7037.jpg", "img/DSCF6881.jpg", "img/DSCF4530.jpg", "img/DSCF4408.jpg", "img/DSC04945.jpg", "img/BAS05297.jpg", "img/BAS05292.jpg", "img/118.JPG", "img/040.JPG", "img/034.JPG", "img/12.JPG", "img/08.JPG", "img/07.JPG", "img/_SON2753.JPG", "img/_DSC8494.JPG", "img/_DSC5570.JPG", "img/_DSC5546.JPG", "img/_DSC5370.JPG" ];
@@ -456,13 +573,17 @@
 
         function renderGallery() {
             const grid = document.getElementById('gallery-grid'); if (!grid) return; grid.innerHTML = ''; let htmlString = '';
+            
+            const tagEvent = currentLang === 'th' ? 'Photobooth กิจกรรม' : 'Event Photobooth';
+            const tagBy = currentLang === 'th' ? 'โดย: สมาชิกชมรม' : 'By: Club Member';
+
             pinnedPhotoboothImages.forEach((filePath, index) => {
                 htmlString += `
                 <div class="masonry-item group" onclick="openLightbox(this)">
                     <img src="${filePath}" alt="Photobooth" loading="lazy" onerror="this.style.display='none'"> 
                     <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand shadow-sm z-10 flex items-center gap-1">✨ Photobooth</div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
-                        <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Photobooth กิจกรรม</p>
+                        <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${tagEvent}</p>
                     </div>
                 </div>`;
             });
@@ -474,7 +595,7 @@
                     <img src="${filePath}" alt="ผลงาน" loading="lazy" onerror="this.style.display='none'"> 
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
                         <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${randomTag}</p>
-                        <p class="text-gray-300 text-xs md:text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">โดย: สมาชิกชมรม</p>
+                        <p class="text-gray-300 text-xs md:text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">${tagBy}</p>
                     </div>
                 </div>`;
             });
@@ -489,15 +610,33 @@
 
         function toggleAdminLogin() {
             if (isAdmin) {
-                if(confirm("ต้องการออกจากระบบผู้ดูแลใช่หรือไม่?")) { isAdmin = false; sessionStorage.setItem('isAdmin', 'false'); updateAdminUI(); renderCalendar(); renderDynamicPR(); }
+                showDialog(
+                    currentLang === 'th' ? 'ออกจากระบบ' : 'Logout',
+                    currentLang === 'th' ? 'ต้องการออกจากระบบผู้ดูแลใช่หรือไม่?' : 'Are you sure you want to log out?',
+                    'confirm',
+                    () => { isAdmin = false; sessionStorage.setItem('isAdmin', 'false'); updateAdminUI(); renderCalendar(); renderDynamicPR(); }
+                );
             } else {
-                if (prompt("กรุณาใส่รหัสผ่าน:") === "kmutt123") { isAdmin = true; sessionStorage.setItem('isAdmin', 'true'); alert("เข้าสู่ระบบสำเร็จ! (โหมด Admin)"); updateAdminUI(); renderCalendar(); renderDynamicPR(); } else alert("รหัสผ่านไม่ถูกต้อง!");
+                showDialog(
+                    currentLang === 'th' ? 'เข้าสู่ระบบผู้ดูแล' : 'Admin Login',
+                    currentLang === 'th' ? 'กรุณาใส่รหัสผ่าน:' : 'Please enter password:',
+                    'prompt',
+                    (val) => {
+                        if (val === "kmutt123") {
+                            isAdmin = true; sessionStorage.setItem('isAdmin', 'true'); 
+                            showDialog(currentLang === 'th' ? 'สำเร็จ' : 'Success', currentLang === 'th' ? 'เข้าสู่ระบบสำเร็จ!' : 'Login successful!');
+                            updateAdminUI(); renderCalendar(); renderDynamicPR();
+                        } else if (val !== null) {
+                            showDialog(currentLang === 'th' ? 'ผิดพลาด' : 'Error', currentLang === 'th' ? 'รหัสผ่านไม่ถูกต้อง!' : 'Incorrect password!');
+                        }
+                    }
+                );
             }
         }
         function updateAdminUI() {
             const adminText = document.getElementById('admin-toggle-text'); const adminBanner = document.getElementById('admin-status-banner'); const addPrBtn = document.getElementById('admin-add-pr-container');
-            if (isAdmin) { adminText.textContent = "ออกจากระบบ (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) adminBanner.classList.remove('hidden'); if(addPrBtn) addPrBtn.classList.remove('hidden'); } 
-            else { adminText.textContent = "ผู้ดูแลระบบ"; adminText.classList.remove('text-brand'); adminText.classList.add('text-gray-500'); if(adminBanner) adminBanner.classList.add('hidden'); if(addPrBtn) addPrBtn.classList.add('hidden'); }
+            if (isAdmin) { adminText.textContent = currentLang === 'th' ? "ออกจากระบบ (Admin)" : "Logout (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) adminBanner.classList.remove('hidden'); if(addPrBtn) addPrBtn.classList.remove('hidden'); } 
+            else { adminText.textContent = currentLang === 'th' ? "ผู้ดูแลระบบ" : "Admin"; adminText.classList.remove('text-brand'); adminText.classList.add('text-gray-500'); if(adminBanner) adminBanner.classList.add('hidden'); if(addPrBtn) addPrBtn.classList.add('hidden'); }
         }
 
         // ==========================================
@@ -506,7 +645,6 @@
         let prPostsData = [];
         let selectedFilesForUpload = []; 
 
-        // ดึงข้อมูลข่าวจาก Firebase แบบ Real-time
         if (db) {
             db.ref('pr_posts').on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -521,6 +659,8 @@
 
         function renderDynamicPR() {
             const grid = document.getElementById('dynamic-pr-grid'); if(!grid) return; grid.innerHTML = '';
+            const txtPics = currentLang === 'th' ? 'รูป' : 'Pics';
+            
             prPostsData.forEach((post, index) => {
                 const imageList = post.images || [];
                 const displayImg = imageList.length > 0 ? imageList[0] : `https://placehold.co/800x400/f8fafc/FF6600?text=No+Image`;
@@ -530,7 +670,7 @@
                 <article class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer group relative" onclick="openDynamicPR(${index})">
                     <div class="h-48 md:h-56 relative overflow-hidden bg-gray-100">
                         <img src="${displayImg}" alt="ปกข่าว" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x400/f8fafc/FF6600?text=No+Image'">
-                        ${imgCount > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl text-white text-xs font-semibold shadow-lg flex items-center gap-1.5 z-10"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>${imgCount} รูป</div>` : ''}
+                        ${imgCount > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl text-white text-xs font-semibold shadow-lg flex items-center gap-1.5 z-10"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>${imgCount} ${txtPics}</div>` : ''}
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
                         <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand line-clamp-2">${post.title}</h3>
@@ -544,7 +684,7 @@
         document.getElementById('pr-input-file').addEventListener('change', function(event) {
             const files = Array.from(event.target.files); let oversized = false; let validFiles = [];
             files.forEach(f => { if(f.size > 32 * 1024 * 1024) oversized = true; else validFiles.push(f); });
-            if (oversized) alert("❌ มีรูปบางรูปใหญ่เกิน 32 MB ระบบตัดรูปนั้นออกอัตโนมัติครับ");
+            if (oversized) showDialog(currentLang === 'th' ? 'ข้อผิดพลาด' : 'Error', currentLang === 'th' ? '❌ มีรูปบางรูปใหญ่เกิน 32 MB ระบบตัดรูปนั้นออกอัตโนมัติ' : '❌ Some images exceed 32MB and were skipped.');
             selectedFilesForUpload = [...selectedFilesForUpload, ...validFiles]; renderUploadPreviews(); event.target.value = ''; 
         });
 
@@ -569,9 +709,9 @@
         function closeCreatePRModal() { document.getElementById('pr-create-modal').classList.add('hidden'); document.getElementById('pr-create-modal').classList.remove('flex'); }
 
         async function savePRPost() {
-            if(!db) { alert("กรุณาตั้งค่า Firebase Config ก่อนโพสต์ข่าวครับ"); return; }
+            if(!db) { showDialog('Error', 'Firebase Config Missing'); return; }
             const title = document.getElementById('pr-input-title').value.trim(); const short = document.getElementById('pr-input-short').value.trim(); const full = document.getElementById('pr-input-full').value.trim();
-            if (!title || !short) { alert('กรุณากรอก "หัวข้อข่าว" และ "คำอธิบายสั้นๆ"'); return; }
+            if (!title || !short) { showDialog(currentLang === 'th' ? 'ข้อมูลไม่ครบ' : 'Missing Info', currentLang === 'th' ? 'กรุณากรอก "หัวข้อข่าว" และ "คำอธิบายสั้นๆ"' : 'Please fill title and short description.'); return; }
             
             const btnText = document.getElementById('save-pr-text'); const spinner = document.getElementById('pr-loading-spinner'); const saveBtn = document.getElementById('save-pr-btn');
             spinner.classList.remove('hidden'); saveBtn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
@@ -579,33 +719,38 @@
             let uploadedUrls = [];
             if (selectedFilesForUpload.length > 0) {
                 for (let i = 0; i < selectedFilesForUpload.length; i++) {
-                    btnText.textContent = `กำลังอัปโหลดรูปที่ ${i + 1} / ${selectedFilesForUpload.length}...`;
+                    btnText.textContent = currentLang === 'th' ? `กำลังอัปโหลดรูป ${i + 1}/${selectedFilesForUpload.length}...` : `Uploading ${i + 1}/${selectedFilesForUpload.length}...`;
                     const formData = new FormData(); formData.append('image', selectedFilesForUpload[i]);
                     try {
                         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
                         const result = await response.json();
                         if(result.success) uploadedUrls.push(result.data.url);
                         else throw new Error(result.error.message);
-                    } catch (error) { alert(`❌ เกิดข้อผิดพลาดในการอัปโหลดรูปที่ ${i+1}: ` + error.message); break; }
+                    } catch (error) { showDialog('Upload Error', `❌ Error: ` + error.message); break; }
                 }
             }
             
             db.ref('pr_posts').push({ title: title, short_desc: short, images: uploadedUrls, full_desc: full, timestamp: firebase.database.ServerValue.TIMESTAMP })
             .then(() => {
                 closeCreatePRModal();
-                btnText.textContent = "โพสต์ประกาศ"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+                btnText.textContent = currentLang === 'th' ? "โพสต์ประกาศ" : "Post"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
             })
             .catch((error) => {
-                alert("โพสต์ไม่สำเร็จ: " + error.message);
-                btnText.textContent = "โพสต์ประกาศ"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+                showDialog('Post Error', "Failed: " + error.message);
+                btnText.textContent = currentLang === 'th' ? "โพสต์ประกาศ" : "Post"; spinner.classList.add('hidden'); saveBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
             });
         }
 
         function deletePRPost(index) {
-            if(confirm('ต้องการลบข่าวประชาสัมพันธ์นี้ใช่หรือไม่?')) {
-                const postId = prPostsData[index].id;
-                db.ref('pr_posts/' + postId).remove();
-            }
+            showDialog(
+                currentLang === 'th' ? 'ยืนยันการลบ' : 'Confirm Deletion',
+                currentLang === 'th' ? 'ต้องการลบข่าวประชาสัมพันธ์นี้ใช่หรือไม่?' : 'Are you sure you want to delete this post?',
+                'confirm',
+                () => {
+                    const postId = prPostsData[index].id;
+                    db.ref('pr_posts/' + postId).remove();
+                }
+            );
         }
 
         let currentDynamicSlide = 0; let totalDynamicSlides = 0;
@@ -637,6 +782,7 @@
         function closePR() { const modal = document.getElementById('pr-modal'); const modalContent = document.getElementById('pr-modal-content'); modal.classList.add('opacity-0'); modalContent.classList.replace('scale-100', 'scale-95'); setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = 'auto'; }, 300); }
 
         window.addEventListener('load', () => {
+            applyLanguage();
             setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 800); 
             updateAdminUI(); renderGallery(); 
             if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
@@ -650,10 +796,15 @@
         function closeLightbox() { document.getElementById('lightbox-modal').classList.add('hidden'); }
 
         // ==========================================
-        // 🗓️ 5. ระบบตารางงาน (อัปเดต Mobile UI & View Modal)
+        // 🗓️ 5. ระบบตารางงาน (อัปเดต View Modal & Bilingual)
         // ==========================================
         const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = {};
+        
         const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+        const engMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        const thaiDays = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+        const engDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         
         if(db) {
             db.ref('events').on('value', (snapshot) => {
@@ -663,7 +814,24 @@
         }
 
         function renderCalendar() {
-            if(!calendarBody) return; calendarBody.innerHTML = ''; const y = currentDate.getFullYear(); const m = currentDate.getMonth(); document.getElementById('current-month-year').textContent = `${thaiMonths[m]} ${y + 543}`;
+            if(!calendarBody) return; calendarBody.innerHTML = ''; 
+            const y = currentDate.getFullYear(); const m = currentDate.getMonth(); 
+            
+            // Set Month/Year Title
+            const months = currentLang === 'th' ? thaiMonths : engMonths;
+            const yearDisplay = currentLang === 'th' ? y + 543 : y;
+            document.getElementById('current-month-year').textContent = `${months[m]} ${yearDisplay}`;
+
+            // Set Days Header
+            const daysHeader = document.getElementById('calendar-days-header');
+            const daysArr = currentLang === 'th' ? thaiDays : engDays;
+            daysHeader.innerHTML = `
+                <div class="text-red-500">${daysArr[0]}</div><div class="text-gray-700">${daysArr[1]}</div>
+                <div class="text-gray-700">${daysArr[2]}</div><div class="text-gray-700">${daysArr[3]}</div>
+                <div class="text-gray-700">${daysArr[4]}</div><div class="text-gray-700">${daysArr[5]}</div>
+                <div class="text-blue-500">${daysArr[6]}</div>
+            `;
+
             const firstDay = new Date(y, m, 1).getDay(); const lastDay = new Date(y, m + 1, 0).getDate(); const prevLastDay = new Date(y, m, 0).getDate();
             for (let x = firstDay; x > 0; x--) calendarBody.innerHTML += `<div class="p-1 md:p-2 border-b border-r border-gray-100 bg-gray-50/50 opacity-50"><span class="text-xs md:text-sm text-gray-400">${prevLastDay - x + 1}</span></div>`;
             const today = new Date();
@@ -671,7 +839,6 @@
             for (let i = 1; i <= lastDay; i++) {
                 const ds = `${y}-${String(m + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const isToday = i === today.getDate() && m === today.getMonth() && y === today.getFullYear();
                 
-                // กำหนด Hover Style ตามสถานะ
                 let hoverClass = '';
                 if (isAdmin) hoverClass = 'cursor-pointer hover:bg-orange-50/50';
                 
@@ -680,7 +847,6 @@
                 
                 let html = `<div class="flex justify-center mb-1"><span class="inline-flex justify-center items-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-medium ${isToday ? 'bg-brand text-white shadow-sm' : 'text-gray-700'}">${i}</span></div>`;
                 
-                // คอนเทนเนอร์สำหรับงาน: ปรับให้รองรับทั้งมือถือและ PC
                 let evHTML = '<div class="flex-grow flex flex-col gap-0.5 md:gap-1 overflow-y-auto custom-scrollbar">'; 
                 let hasEvents = false;
 
@@ -688,17 +854,14 @@
                     const dayEvents = Array.isArray(eventsData[ds]) ? eventsData[ds] : Object.values(eventsData[ds]);
                     hasEvents = dayEvents.some(e => e != null);
                     
-                    if (!isAdmin && hasEvents) hoverClass = 'cursor-pointer hover:bg-gray-50'; // ให้คนทั่วไปกดได้ถ้ามีงาน
+                    if (!isAdmin && hasEvents) hoverClass = 'cursor-pointer hover:bg-gray-50'; 
 
                     dayEvents.forEach((ev, idx) => { 
                         if(!ev) return; 
-                        
-                        // [UI ปรับใหม่] แสดงเป็นกล่องข้อความทั้งบนมือถือและ PC แต่ปรับขนาดตัวอักษรและ padding
                         evHTML += `
                         <div class="text-[9px] md:text-xs bg-brand/10 md:bg-brand text-brand md:text-white px-1 py-0.5 md:px-2 md:py-1 rounded-sm md:rounded shadow-sm flex justify-between items-center w-full overflow-hidden border border-brand/20 md:border-none">
                             <span class="truncate block w-full text-center md:text-left">${ev.title}</span>`; 
                         
-                        // ปุ่มลบสำหรับ Admin (ซ่อนในจอมือถือบางส่วนเพื่อประหยัดพื้นที่ หรือจะแสดงแค่ตอน Hover บน PC)
                         if(isAdmin) {
                             evHTML += `<button class="hidden md:flex ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; 
                         }
@@ -709,11 +872,10 @@
                 div.className += ` ${hoverClass}`;
                 div.innerHTML = html + evHTML + '</div>';
 
-                // ตั้งค่าการคลิกวันที่
                 if (isAdmin) {
-                    div.addEventListener('click', () => openEventModal(ds, i, thaiMonths[m], y + 543));
+                    div.addEventListener('click', () => openEventModal(ds, i, months[m], yearDisplay));
                 } else if (hasEvents) {
-                    div.addEventListener('click', () => openViewEventModal(ds, i, thaiMonths[m], y + 543));
+                    div.addEventListener('click', () => openViewEventModal(ds, i, months[m], yearDisplay));
                 }
 
                 calendarBody.appendChild(div);
@@ -722,15 +884,19 @@
         document.getElementById('prev-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
         document.getElementById('next-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
         
-        // --- ฟังก์ชันเปิดปิด Modal สำหรับ Admin ---
         function openEventModal(key, d, m, y) {
-            selectedDateKey = key; document.getElementById('modal-date-text').textContent = `วัน${d} ${m} ${y}`; document.getElementById('event-title').value = '';
+            selectedDateKey = key; 
+            const preDay = currentLang === 'th' ? 'วันที่ ' : '';
+            document.getElementById('modal-date-text').textContent = `${preDay}${d} ${m} ${y}`; 
+            document.getElementById('event-title').value = '';
+            
             const list = document.getElementById('existing-events-list'); const cont = document.getElementById('existing-events-container');
             if(eventsData[key] && Object.keys(eventsData[key]).length > 0) { 
                 cont.classList.remove('hidden'); list.innerHTML = ''; 
                 const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
                 dayEvents.forEach((ev, idx) => {
-                    if(ev) list.innerHTML += `<li class="flex justify-between p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">ลบ</button></li>`;
+                    const txtDel = currentLang === 'th' ? 'ลบ' : 'Del';
+                    if(ev) list.innerHTML += `<li class="flex justify-between p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></li>`;
                 }); 
             } else cont.classList.add('hidden');
             const modal = document.getElementById('event-modal'); modal.classList.remove('hidden'); setTimeout(() => document.getElementById('event-modal-content').classList.replace('scale-95', 'scale-100'), 10);
@@ -738,17 +904,22 @@
         function closeEventModal() { document.getElementById('event-modal-content').classList.replace('scale-100', 'scale-95'); setTimeout(() => document.getElementById('event-modal').classList.add('hidden'), 150); }
         
         function deleteEvent(dateKey, index) { 
-            if(confirm('ยืนยันการลบกิจกรรมนี้?')) { 
-                let dayEvents = Array.isArray(eventsData[dateKey]) ? eventsData[dateKey] : Object.values(eventsData[dateKey]);
-                dayEvents.splice(index, 1);
-                dayEvents = dayEvents.filter(e => e != null);
-                if(dayEvents.length === 0) db.ref('events/' + dateKey).remove(); else db.ref('events/' + dateKey).set(dayEvents);
-                closeEventModal(); 
-            } 
+            showDialog(
+                currentLang === 'th' ? 'ยืนยันการลบ' : 'Confirm Deletion',
+                currentLang === 'th' ? 'ยืนยันการลบกิจกรรมนี้?' : 'Are you sure you want to delete this event?',
+                'confirm',
+                () => {
+                    let dayEvents = Array.isArray(eventsData[dateKey]) ? eventsData[dateKey] : Object.values(eventsData[dateKey]);
+                    dayEvents.splice(index, 1);
+                    dayEvents = dayEvents.filter(e => e != null);
+                    if(dayEvents.length === 0) db.ref('events/' + dateKey).remove(); else db.ref('events/' + dateKey).set(dayEvents);
+                    closeEventModal(); 
+                }
+            );
         }
         document.getElementById('close-modal-btn').addEventListener('click', closeEventModal); document.getElementById('close-modal-icon').addEventListener('click', closeEventModal);
         document.getElementById('save-event-btn').addEventListener('click', () => { 
-            if(!db) { alert("กรุณาตั้งค่า Firebase Config ก่อนครับ"); return; }
+            if(!db) { showDialog('Error', 'Firebase Config Missing'); return; }
             const t = document.getElementById('event-title').value.trim(); 
             if(t) { 
                 let dayEvents = eventsData[selectedDateKey] ? (Array.isArray(eventsData[selectedDateKey]) ? eventsData[selectedDateKey] : Object.values(eventsData[selectedDateKey])) : [];
@@ -757,9 +928,9 @@
             } 
         });
 
-        // --- ฟังก์ชันเปิดปิด Modal สำหรับคนทั่วไป (View Only) ---
         function openViewEventModal(key, d, m, y) {
-            document.getElementById('view-modal-date-text').textContent = `วันที่ ${d} ${m} ${y}`;
+            const preDay = currentLang === 'th' ? 'วันที่ ' : 'Date: ';
+            document.getElementById('view-modal-date-text').textContent = `${preDay}${d} ${m} ${y}`;
             const list = document.getElementById('view-events-list');
             list.innerHTML = '';
             
