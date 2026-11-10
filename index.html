@@ -332,7 +332,7 @@
             </div>
             <div class="flex justify-end gap-2 mt-2">
                 <button id="close-modal-btn" class="px-5 py-2.5 text-gray-600 bg-gray-100 hover:bg-gray-200 font-semibold rounded-xl w-full md:w-auto" data-th="ปิด" data-en="Close">ปิด</button>
-                <button id="save-event-btn" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl w-full md:w-auto" data-th="เพิ่มกิจกรรม" data-en="Add Event">เพิ่มกิจกรรม</button>
+                <button id="save-event-btn" type="button" class="px-5 py-2.5 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl w-full md:w-auto" data-th="เพิ่มกิจกรรม" data-en="Add Event">เพิ่มกิจกรรม</button>
             </div>
         </div>
     </div>
@@ -931,9 +931,18 @@
                     if(ev) list.innerHTML += `<li class="flex justify-between p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></li>`;
                 }); 
             } else cont.classList.add('hidden');
-            const modal = document.getElementById('event-modal'); modal.classList.remove('hidden'); setTimeout(() => document.getElementById('event-modal-content').classList.replace('scale-95', 'scale-100'), 10);
+            const modal = document.getElementById('event-modal');
+            const modalContent = document.getElementById('event-modal-content');
+            modalContent.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => modalContent.classList.replace('scale-95', 'scale-100'), 10);
         }
-        function closeEventModal() { document.getElementById('event-modal-content').classList.replace('scale-100', 'scale-95'); setTimeout(() => document.getElementById('event-modal-content').classList.add('hidden'), 150); }
+        function closeEventModal() {
+            const modal = document.getElementById('event-modal');
+            const modalContent = document.getElementById('event-modal-content');
+            modalContent.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 150);
+        }
         
         function deleteEvent(dateKey, index) { 
             showDialog(
@@ -941,23 +950,59 @@
                 currentLang === 'th' ? 'ยืนยันการลบกิจกรรมนี้?' : 'Are you sure you want to delete this event?',
                 'confirm',
                 () => {
-                    let dayEvents = Array.isArray(eventsData[dateKey]) ? eventsData[dateKey] : Object.values(eventsData[dateKey]);
+                    if (!db || !eventsData[dateKey]) return;
+                    let dayEvents = Array.isArray(eventsData[dateKey]) ? [...eventsData[dateKey]] : Object.values(eventsData[dateKey]);
                     dayEvents.splice(index, 1);
                     dayEvents = dayEvents.filter(e => e != null);
-                    if(dayEvents.length === 0) db.ref('events/' + dateKey).remove(); else db.ref('events/' + dateKey).set(dayEvents);
-                    closeEventModal(); 
+                    const saveOperation = dayEvents.length === 0
+                        ? db.ref('events/' + dateKey).remove()
+                        : db.ref('events/' + dateKey).set(dayEvents);
+                    saveOperation.catch(error => showEventDatabaseError(error));
+                    closeEventModal();
                 }
             );
         }
         document.getElementById('close-modal-btn').addEventListener('click', closeEventModal); document.getElementById('close-modal-icon').addEventListener('click', closeEventModal);
-        document.getElementById('save-event-btn').addEventListener('click', () => { 
-            if(!db) { showDialog('Error', 'Firebase Config Missing'); return; }
+        function showEventDatabaseError(error) {
+            console.error('Event database operation failed:', error);
+            const isPermissionError = error && (error.code === 'PERMISSION_DENIED' || /permission_denied/i.test(error.message || ''));
+            const message = isPermissionError
+                ? (currentLang === 'th'
+                    ? 'Firebase ปฏิเสธการบันทึก กรุณาตรวจสอบ Realtime Database Rules ว่าอนุญาตให้ผู้ดูแลเขียนข้อมูลที่ events ได้'
+                    : 'Firebase denied this write. Check Realtime Database Rules to ensure admins can write to events.')
+                : (currentLang === 'th'
+                    ? `บันทึกไม่สำเร็จ: ${error?.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ'}`
+                    : `Save failed: ${error?.message || 'Unknown error'}`);
+            showDialog(currentLang === 'th' ? 'บันทึกงานไม่สำเร็จ' : 'Could not save event', message);
+        }
+
+        document.getElementById('save-event-btn').addEventListener('click', async () => {
+            const saveButton = document.getElementById('save-event-btn');
+            if (!db) { showDialog(currentLang === 'th' ? 'เชื่อมต่อฐานข้อมูลไม่ได้' : 'Database unavailable', currentLang === 'th' ? 'ตรวจสอบการเชื่อมต่อ Firebase แล้วลองใหม่' : 'Check the Firebase connection and try again.'); return; }
+            if (!isAdmin) { showDialog(currentLang === 'th' ? 'ไม่มีสิทธิ์' : 'Not authorized', currentLang === 'th' ? 'กรุณาเข้าสู่ระบบผู้ดูแลก่อนบันทึกงาน' : 'Log in as an admin before saving events.'); return; }
+            if (!selectedDateKey) { showDialog(currentLang === 'th' ? 'ไม่ได้เลือกวันที่' : 'No date selected', currentLang === 'th' ? 'ปิดหน้าต่างแล้วเลือกวันที่อีกครั้ง' : 'Close this window and select a date again.'); return; }
             const t = document.getElementById('event-title').value.trim(); 
-            if(t) { 
-                let dayEvents = eventsData[selectedDateKey] ? (Array.isArray(eventsData[selectedDateKey]) ? eventsData[selectedDateKey] : Object.values(eventsData[selectedDateKey])) : [];
-                dayEvents = dayEvents.filter(e => e != null); dayEvents.push({ title: t }); 
-                db.ref('events/' + selectedDateKey).set(dayEvents).then(() => closeEventModal()); 
-            } 
+            if (!t) {
+                showDialog(currentLang === 'th' ? 'กรุณากรอกชื่องาน' : 'Event name required', currentLang === 'th' ? 'พิมพ์ชื่องานก่อนกดเพิ่มกิจกรรม' : 'Enter an event name before saving.');
+                document.getElementById('event-title').focus();
+                return;
+            }
+            saveButton.disabled = true;
+            saveButton.classList.add('opacity-60', 'cursor-not-allowed');
+            try {
+                const existing = eventsData[selectedDateKey];
+                const dayEvents = existing
+                    ? (Array.isArray(existing) ? [...existing] : Object.values(existing)).filter(Boolean)
+                    : [];
+                dayEvents.push({ title: t });
+                await db.ref('events/' + selectedDateKey).set(dayEvents);
+                closeEventModal();
+            } catch (error) {
+                showEventDatabaseError(error);
+            } finally {
+                saveButton.disabled = false;
+                saveButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
         });
 
         function openViewEventModal(key, d, m, y) {
