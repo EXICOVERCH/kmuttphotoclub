@@ -15,6 +15,7 @@
     <!-- 🚀 นำเข้า Firebase Scripts (v8) เฉพาะ App และ Database ไม่ต้องใช้ Storage -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -590,10 +591,12 @@
 
         let db;
         let auth;
+        let functions;
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.database();
             auth = firebase.auth();
+            functions = firebase.app().functions('asia-southeast1');
             console.log("Firebase Connected!");
         } catch (error) {
             console.error("Firebase Error:", error);
@@ -1151,13 +1154,21 @@
                 const dayEvents = existing
                     ? (Array.isArray(existing) ? [...existing] : Object.values(existing)).filter(Boolean)
                     : [];
+                saveButton.textContent = currentLang === 'th' ? 'กำลังแปลและบันทึก…' : 'Translating and saving…';
+                const translationResult = await functions.httpsCallable('translateEventFields')({
+                    titleTh,
+                    titleEn,
+                    detailsTh,
+                    detailsEn
+                });
+                const translated = translationResult.data;
                 const updatedEvent = {
-                    title: titleTh || titleEn,
-                    title_th: titleTh,
-                    title_en: titleEn,
-                    details: detailsTh || detailsEn,
-                    details_th: detailsTh,
-                    details_en: detailsEn,
+                    title: translated.titleTh || translated.titleEn,
+                    title_th: translated.titleTh,
+                    title_en: translated.titleEn,
+                    details: translated.detailsTh || translated.detailsEn,
+                    details_th: translated.detailsTh,
+                    details_en: translated.detailsEn,
                     photographers
                 };
                 if (editingEventIndex === null) dayEvents.push(updatedEvent);
@@ -1166,10 +1177,21 @@
                 editingEventIndex = null;
                 closeEventModal();
             } catch (error) {
-                showEventDatabaseError(error);
+                console.error('Could not translate event fields:', error);
+                const translationError = error?.code === 'functions/not-found' || error?.code === 'functions/failed-precondition'
+                    ? (currentLang === 'th'
+                        ? 'ยังไม่ได้เปิดใช้ระบบแปลภาษาใน Firebase โปรด deploy Cloud Function และเปิด Cloud Translation API ก่อน'
+                        : 'Automatic translation is not configured yet. Deploy the Cloud Function and enable the Cloud Translation API.')
+                    : (currentLang === 'th'
+                        ? `แปลหรือบันทึกไม่สำเร็จ: ${error?.message || 'เกิดข้อผิดพลาด'}`
+                        : `Translation or save failed: ${error?.message || 'Unknown error'}`);
+                showDialog(currentLang === 'th' ? 'แปล/บันทึกไม่สำเร็จ' : 'Translation/save failed', translationError);
             } finally {
                 saveButton.disabled = false;
                 saveButton.classList.remove('opacity-60', 'cursor-not-allowed');
+                saveButton.textContent = editingEventIndex === null
+                    ? (currentLang === 'th' ? 'เพิ่มกิจกรรม' : 'Add Event')
+                    : (currentLang === 'th' ? 'บันทึกการแก้ไข' : 'Save Changes');
             }
         });
 
