@@ -303,9 +303,9 @@
             </div>
             <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg border border-gray-100 overflow-hidden mx-2 md:mx-0">
                 <div class="flex items-center justify-between px-4 md:px-6 py-4 bg-gradient-to-r from-orange-50 to-white border-b border-gray-100">
-                    <button id="prev-month" class="p-3 text-gray-600 hover:text-brand hover:bg-white rounded-full"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg></button>
+                    <button id="prev-month" aria-label="เดือนก่อนหน้า" data-th-aria-label="เดือนก่อนหน้า" data-en-aria-label="Previous month" class="p-3 text-gray-600 hover:text-brand hover:bg-white rounded-full"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg></button>
                     <h3 id="current-month-year" class="text-lg md:text-2xl font-bold text-gray-800"></h3>
-                    <button id="next-month" class="p-3 text-gray-600 hover:text-brand hover:bg-white rounded-full"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></button>
+                    <button id="next-month" aria-label="เดือนถัดไป" data-th-aria-label="เดือนถัดไป" data-en-aria-label="Next month" class="p-3 text-gray-600 hover:text-brand hover:bg-white rounded-full"><svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></button>
                 </div>
                 <div class="w-full">
                     <div id="calendar-days-header" class="grid grid-cols-7 border-b border-gray-100 bg-gray-50 text-center text-xs md:text-sm font-semibold py-2 md:py-4"></div>
@@ -445,8 +445,33 @@
                     }
                 }
             });
+            document.querySelectorAll('[data-th-aria-label]').forEach(el => {
+                el.setAttribute('aria-label', el.getAttribute(`data-${currentLang}-aria-label`));
+            });
             updateAdminUI();
-            if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
+            if (typeof renderDynamicPR === 'function') renderDynamicPR();
+            if (typeof renderCalendar === 'function' && document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
+            if (typeof selectedDateKey !== 'undefined' && !document.getElementById('event-modal').classList.contains('hidden')) {
+                const dateParts = selectedDateKey.split('-').map(Number);
+                const savedForm = {
+                    title: document.getElementById('event-title').value,
+                    details: document.getElementById('event-details').value,
+                    photographers: document.getElementById('event-photographers').value,
+                    editingIndex: editingEventIndex
+                };
+                openEventModal(selectedDateKey, dateParts[2], (currentLang === 'th' ? thaiMonths : engMonths)[dateParts[1] - 1], currentLang === 'th' ? dateParts[0] + 543 : dateParts[0]);
+                document.getElementById('event-title').value = savedForm.title;
+                document.getElementById('event-details').value = savedForm.details;
+                document.getElementById('event-photographers').value = savedForm.photographers;
+                editingEventIndex = savedForm.editingIndex;
+                if (editingEventIndex !== null) document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'บันทึกการแก้ไข' : 'Save Changes';
+            }
+            if (typeof activeViewEventArgs !== 'undefined' && activeViewEventArgs && !document.getElementById('view-event-modal').classList.contains('hidden')) {
+                const [dateKey, day] = activeViewEventArgs;
+                const [year, month] = dateKey.split('-').map(Number);
+                const monthNames = currentLang === 'th' ? thaiMonths : engMonths;
+                openViewEventModal(dateKey, day, monthNames[month - 1], currentLang === 'th' ? year + 543 : year);
+            }
         }
 
         // ==========================================
@@ -889,6 +914,7 @@
         // ==========================================
         const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = {};
         let editingEventIndex = null;
+        let activeViewEventArgs = null;
         
         const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
         const engMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -1101,6 +1127,7 @@
         });
 
         function openViewEventModal(key, d, m, y) {
+            activeViewEventArgs = [key, d, m, y];
             const preDay = currentLang === 'th' ? 'วันที่ ' : 'Date: ';
             document.getElementById('view-modal-date-text').textContent = `${preDay}${d} ${m} ${y}`;
             const list = document.getElementById('view-events-list');
@@ -1134,6 +1161,7 @@
         function closeViewEventModal() {
             document.getElementById('view-event-modal-content').classList.replace('scale-100', 'scale-95');
             setTimeout(() => document.getElementById('view-event-modal').classList.add('hidden'), 150);
+            activeViewEventArgs = null;
         }
     </script>
 </body>
