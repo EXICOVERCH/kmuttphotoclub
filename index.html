@@ -14,6 +14,7 @@
     
     <!-- 🚀 นำเข้า Firebase Scripts (v8) เฉพาะ App และ Database ไม่ต้องใช้ Storage -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -462,13 +463,25 @@
                 actions.appendChild(cancelBtn);
             }
 
-            if (type === 'prompt') {
+            if (type === 'prompt' || type === 'admin-login') {
                 const input = document.createElement('input');
-                input.type = 'password';
+                input.type = type === 'admin-login' ? 'email' : 'password';
                 input.id = 'dialog-prompt-input';
                 input.className = 'w-full border border-gray-300 p-3 rounded-xl mt-4 focus:ring-2 focus:ring-brand outline-none';
-                input.placeholder = currentLang === 'th' ? 'ใส่รหัสผ่าน...' : 'Enter password...';
+                input.placeholder = type === 'admin-login'
+                    ? (currentLang === 'th' ? 'อีเมลบัญชี Firebase' : 'Firebase account email')
+                    : (currentLang === 'th' ? 'ใส่รหัสผ่าน...' : 'Enter password...');
                 msgContainer.appendChild(input);
+
+                if (type === 'admin-login') {
+                    const passwordInput = document.createElement('input');
+                    passwordInput.type = 'password';
+                    passwordInput.id = 'dialog-admin-password';
+                    passwordInput.autocomplete = 'current-password';
+                    passwordInput.className = 'w-full border border-gray-300 p-3 rounded-xl mt-3 focus:ring-2 focus:ring-brand outline-none';
+                    passwordInput.placeholder = currentLang === 'th' ? 'รหัสผ่าน Firebase' : 'Firebase account password';
+                    msgContainer.appendChild(passwordInput);
+                }
                 
                 setTimeout(() => {
                     input.focus();
@@ -483,7 +496,11 @@
             confirmBtn.textContent = currentLang === 'th' ? 'ตกลง' : 'OK';
             const confirmAction = () => {
                 let val = null;
-                if (type === 'prompt') val = document.getElementById('dialog-prompt-input').value;
+                if (type === 'admin-login') val = {
+                    email: document.getElementById('dialog-prompt-input').value.trim(),
+                    password: document.getElementById('dialog-admin-password').value
+                };
+                else if (type === 'prompt') val = document.getElementById('dialog-prompt-input').value;
                 closeDialog();
                 if (onConfirm) onConfirm(val);
             };
@@ -524,9 +541,11 @@
         };
 
         let db;
+        let auth;
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.database();
+            auth = firebase.auth();
             console.log("Firebase Connected!");
         } catch (error) {
             console.error("Firebase Error:", error);
@@ -581,32 +600,56 @@
         // ==========================================
         // 🔧 3. ระบบ Admin
         // ==========================================
-        let isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+        const ADMIN_UID = 'sQVLr4r3uqbTbVugTgIfcUBLz2';
+        let isAdmin = false;
 
-        function toggleAdminLogin() {
+        async function toggleAdminLogin() {
+            if (!auth) {
+                showDialog(currentLang === 'th' ? 'เชื่อมต่อไม่ได้' : 'Connection unavailable', currentLang === 'th' ? 'ไม่สามารถเชื่อมต่อ Firebase Authentication ได้' : 'Firebase Authentication is unavailable.');
+                return;
+            }
             if (isAdmin) {
-                showDialog(
-                    currentLang === 'th' ? 'ออกจากระบบ' : 'Logout',
-                    currentLang === 'th' ? 'ต้องการออกจากระบบผู้ดูแลใช่หรือไม่?' : 'Are you sure you want to log out?',
-                    'confirm',
-                    () => { isAdmin = false; sessionStorage.setItem('isAdmin', 'false'); updateAdminUI(); renderCalendar(); renderDynamicPR(); }
-                );
+                try {
+                    await auth.signOut();
+                } catch (error) {
+                    showDialog(currentLang === 'th' ? 'ออกจากระบบไม่สำเร็จ' : 'Logout failed', error.message);
+                }
             } else {
                 showDialog(
                     currentLang === 'th' ? 'เข้าสู่ระบบผู้ดูแล' : 'Admin Login',
-                    currentLang === 'th' ? 'กรุณาใส่รหัสผ่าน:' : 'Please enter password:',
-                    'prompt',
-                    (val) => {
-                        if (val === "kmutt123") {
-                            isAdmin = true; sessionStorage.setItem('isAdmin', 'true'); 
-                            showDialog(currentLang === 'th' ? 'สำเร็จ' : 'Success', currentLang === 'th' ? 'เข้าสู่ระบบสำเร็จ!' : 'Login successful!');
-                            updateAdminUI(); renderCalendar(); renderDynamicPR();
-                        } else if (val !== null) {
-                            showDialog(currentLang === 'th' ? 'ผิดพลาด' : 'Error', currentLang === 'th' ? 'รหัสผ่านไม่ถูกต้อง!' : 'Incorrect password!');
+                    currentLang === 'th' ? 'ใช้บัญชีผู้ดูแลที่สร้างไว้ใน Firebase Authentication' : 'Use the admin account created in Firebase Authentication.',
+                    'admin-login',
+                    async (credentials) => {
+                        if (!credentials?.email || !credentials.password) {
+                            showDialog(currentLang === 'th' ? 'กรอกข้อมูลให้ครบ' : 'Missing credentials', currentLang === 'th' ? 'กรุณากรอกอีเมลและรหัสผ่าน' : 'Enter both email and password.');
+                            return;
+                        }
+                        try {
+                            const credential = await auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+                            if (credential.user.uid !== ADMIN_UID) {
+                                await auth.signOut();
+                                showDialog(currentLang === 'th' ? 'ไม่มีสิทธิ์ Admin' : 'Admin access denied', currentLang === 'th' ? 'บัญชีนี้ไม่ใช่บัญชีผู้ดูแลที่กำหนดไว้' : 'This account is not the configured admin account.');
+                            }
+                        } catch (error) {
+                            showDialog(currentLang === 'th' ? 'เข้าสู่ระบบไม่สำเร็จ' : 'Login failed', error.message);
                         }
                     }
                 );
             }
+        }
+
+        if (auth) {
+            auth.onAuthStateChanged(user => {
+                if (user && user.uid !== ADMIN_UID) {
+                    isAdmin = false;
+                    auth.signOut();
+                } else {
+                    isAdmin = Boolean(user);
+                }
+                updateAdminUI();
+                renderCalendar();
+                renderDynamicPR();
+            });
         }
         function updateAdminUI() {
             const adminText = document.getElementById('admin-toggle-text'); const adminBanner = document.getElementById('admin-status-banner'); const addPrBtn = document.getElementById('admin-add-pr-container');
@@ -629,6 +672,9 @@
                     prPostsData.reverse(); 
                 }
                 renderDynamicPR();
+            }, error => {
+                console.error('Could not read PR posts:', error);
+                showDialog(currentLang === 'th' ? 'อ่านประกาศไม่ได้' : 'Could not load announcements', error.message);
             });
         }
 
@@ -717,6 +763,7 @@
         // บันทึกลง Realtime Database โดยตรง
         async function savePRPost() {
             if(!db) { showDialog('Error', 'Firebase Config Missing'); return; }
+            if(!isAdmin) { showDialog(currentLang === 'th' ? 'กรุณาเข้าสู่ระบบ Admin' : 'Admin login required', currentLang === 'th' ? 'เข้าสู่ระบบผู้ดูแลก่อนโพสต์ประกาศ' : 'Log in as admin before posting.'); return; }
             const title = document.getElementById('pr-input-title').value.trim();
             const short = document.getElementById('pr-input-short').value.trim();
             const full = document.getElementById('pr-input-full').value.trim();
@@ -766,7 +813,7 @@
                 'confirm',
                 () => {
                     const postId = prPostsData[index].id;
-                    db.ref('pr_posts/' + postId).remove();
+                    db.ref('pr_posts/' + postId).remove().catch(error => showEventDatabaseError(error));
                 }
             );
         }
@@ -844,6 +891,9 @@
             db.ref('events').on('value', (snapshot) => {
                 eventsData = snapshot.val() || {};
                 if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
+            }, error => {
+                console.error('Could not read events:', error);
+                showEventDatabaseError(error);
             });
         }
 
