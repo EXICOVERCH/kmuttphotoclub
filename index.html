@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ชมรมศิลปะและการถ่ายภาพ มจธ. | KMUTT Photo Club</title>
-    
+
     <link rel="icon" href="326739173_1839070083124543_4820509062487065087_n.png" type="image/png">
     <link rel="apple-touch-icon" href="326739173_1839070083124543_4820509062487065087_n.png">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- 🚀 นำเข้า Firebase Scripts (v8) เฉพาะ App และ Database ไม่ต้องใช้ Storage -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -324,12 +324,20 @@
             </div>
             <p id="modal-date-text" class="text-sm md:text-base text-brand font-semibold mb-5 bg-orange-50 px-4 py-2.5 rounded-xl border border-brand/10"></p>
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-2" data-th="เพิ่มกิจกรรมใหม่" data-en="Add New Event">เพิ่มกิจกรรมใหม่</label>
-                <input type="text" id="event-title" data-th="เช่น ทริปถ่ายภาพ, ประชุมชมรม" data-en="e.g., Photo Trip, Meeting" placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-th="ชื่องาน (ภาษาไทย)" data-en="Event title (Thai)">ชื่องาน (ภาษาไทย)</label>
+                <input type="text" id="event-title-th" placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" data-th-placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" data-en-placeholder="e.g., Photo trip, Club meeting" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
             </div>
             <div class="mb-5">
-                <label for="event-details" class="block text-sm font-medium text-gray-700 mb-2" data-th="รายละเอียดงาน (ไม่บังคับ)" data-en="Event details (optional)">รายละเอียดงาน (ไม่บังคับ)</label>
-                <textarea id="event-details" rows="3" data-th="รายละเอียดหรือหมายเหตุของงาน" data-en="Event details or notes" placeholder="รายละเอียดหรือหมายเหตุของงาน" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none resize-y" style="font-size: 16px;"></textarea>
+                <label for="event-title-en" class="block text-sm font-medium text-gray-700 mb-2" data-th="ชื่องาน (ภาษาอังกฤษ)" data-en="Event title (English)">ชื่องาน (ภาษาอังกฤษ)</label>
+                <input type="text" id="event-title-en" placeholder="e.g., Photo trip, Club meeting" data-th-placeholder="ตัวอย่าง: ทริปถ่ายภาพ, ประชุมชมรม" data-en-placeholder="e.g., Photo trip, Club meeting" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
+            </div>
+            <div class="mb-5">
+                <label for="event-details-th" class="block text-sm font-medium text-gray-700 mb-2" data-th="รายละเอียดงาน (ภาษาไทย)" data-en="Event details (Thai)">รายละเอียดงาน (ภาษาไทย)</label>
+                <textarea id="event-details-th" rows="3" placeholder="รายละเอียดหรือหมายเหตุของงาน" data-th-placeholder="รายละเอียดหรือหมายเหตุของงาน" data-en-placeholder="Event details or notes in Thai" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none resize-y" style="font-size: 16px;"></textarea>
+            </div>
+            <div class="mb-5">
+                <label for="event-details-en" class="block text-sm font-medium text-gray-700 mb-2" data-th="รายละเอียดงาน (ภาษาอังกฤษ)" data-en="Event details (English)">รายละเอียดงาน (ภาษาอังกฤษ)</label>
+                <textarea id="event-details-en" rows="3" placeholder="Event details or notes" data-th-placeholder="รายละเอียดหรือหมายเหตุของงานเป็นภาษาอังกฤษ" data-en-placeholder="Event details or notes" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none resize-y" style="font-size: 16px;"></textarea>
             </div>
             <div class="mb-5">
                 <label for="event-photographers" class="block text-sm font-medium text-gray-700 mb-2" data-th="ช่างภาพ (ใส่ชื่อคั่นด้วยจุลภาค)" data-en="Photographers (separate names with commas)">ช่างภาพ (ใส่ชื่อคั่นด้วยจุลภาค)</label>
@@ -382,7 +390,7 @@
     <footer class="bg-gray-900 text-white pt-12 pb-6 md:pb-8 border-t-4 border-brand mt-auto w-full pb-[env(safe-area-inset-bottom)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="border-t border-gray-800 pt-6 flex flex-col xl:flex-row justify-between items-center gap-6">
-                
+
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <div class="flex gap-4">
                         <a href="https://www.facebook.com/KMUTTPHOTOCLUB" target="_blank" class="text-gray-400 hover:text-brand transition-colors" title="Facebook">
@@ -406,9 +414,9 @@
                             <a href="https://instagram.com/_k.i.m.x_" target="_blank" class="hover:text-brand transition-colors">IG : (k'ขิม) _k.i.m.x_</a>
                         </div>
                     </div>
-                    
+
                     <div class="hidden xl:block w-px h-4 bg-gray-700 mx-2"></div>
-                    
+
                     <button onclick="toggleAdminLogin()" id="admin-toggle-btn" class="text-gray-500 hover:text-brand font-medium flex items-center gap-1.5 p-1 transition-colors mt-2 md:mt-0">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         <span id="admin-toggle-text" data-th="ผู้ดูแลระบบ" data-en="Admin">ผู้ดูแลระบบ</span>
@@ -448,20 +456,27 @@
             document.querySelectorAll('[data-th-aria-label]').forEach(el => {
                 el.setAttribute('aria-label', el.getAttribute(`data-${currentLang}-aria-label`));
             });
+            document.querySelectorAll('[data-th-placeholder]').forEach(el => {
+                el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
+            });
             updateAdminUI();
             if (typeof renderDynamicPR === 'function') renderDynamicPR();
             if (typeof renderCalendar === 'function' && document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
             if (typeof selectedDateKey !== 'undefined' && !document.getElementById('event-modal').classList.contains('hidden')) {
                 const dateParts = selectedDateKey.split('-').map(Number);
                 const savedForm = {
-                    title: document.getElementById('event-title').value,
-                    details: document.getElementById('event-details').value,
+                    titleTh: document.getElementById('event-title-th').value,
+                    titleEn: document.getElementById('event-title-en').value,
+                    detailsTh: document.getElementById('event-details-th').value,
+                    detailsEn: document.getElementById('event-details-en').value,
                     photographers: document.getElementById('event-photographers').value,
                     editingIndex: editingEventIndex
                 };
                 openEventModal(selectedDateKey, dateParts[2], (currentLang === 'th' ? thaiMonths : engMonths)[dateParts[1] - 1], currentLang === 'th' ? dateParts[0] + 543 : dateParts[0]);
-                document.getElementById('event-title').value = savedForm.title;
-                document.getElementById('event-details').value = savedForm.details;
+                document.getElementById('event-title-th').value = savedForm.titleTh;
+                document.getElementById('event-title-en').value = savedForm.titleEn;
+                document.getElementById('event-details-th').value = savedForm.detailsTh;
+                document.getElementById('event-details-en').value = savedForm.detailsEn;
                 document.getElementById('event-photographers').value = savedForm.photographers;
                 editingEventIndex = savedForm.editingIndex;
                 if (editingEventIndex !== null) document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'บันทึกการแก้ไข' : 'Save Changes';
@@ -481,7 +496,7 @@
             const dialog = document.getElementById('custom-dialog');
             const content = document.getElementById('custom-dialog-content');
             document.getElementById('custom-dialog-title').textContent = title;
-            
+
             const msgContainer = document.getElementById('custom-dialog-message-container');
             msgContainer.innerHTML = `<p>${message}</p>`;
 
@@ -515,7 +530,7 @@
                     passwordInput.placeholder = currentLang === 'th' ? 'รหัสผ่าน Firebase' : 'Firebase account password';
                     msgContainer.appendChild(passwordInput);
                 }
-                
+
                 setTimeout(() => {
                     input.focus();
                     input.addEventListener('keypress', function (e) {
@@ -608,7 +623,7 @@
             pinnedPhotoboothImages.forEach((filePath) => {
                 htmlString += `
                 <div class="masonry-item group" onclick="openLightbox(this)">
-                    <img src="${filePath}" alt="Photobooth" loading="lazy" onerror="this.style.display='none'"> 
+                    <img src="${filePath}" alt="Photobooth" loading="lazy" onerror="this.style.display='none'">
                     <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand shadow-sm z-10 flex items-center gap-1">✨ Photobooth</div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
                         <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${tagEvent}</p>
@@ -620,7 +635,7 @@
                 const randomTag = photoTags[Math.floor(Math.random() * photoTags.length)];
                 htmlString += `
                 <div class="masonry-item group" onclick="openLightbox(this)">
-                    <img src="${filePath}" alt="ผลงาน" loading="lazy" onerror="this.style.display='none'"> 
+                    <img src="${filePath}" alt="ผลงาน" loading="lazy" onerror="this.style.display='none'">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
                         <p class="text-white font-semibold text-lg md:text-xl mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${randomTag}</p>
                         <p class="text-gray-300 text-xs md:text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">${tagBy}</p>
@@ -686,7 +701,7 @@
         }
         function updateAdminUI() {
             const adminText = document.getElementById('admin-toggle-text'); const adminBanner = document.getElementById('admin-status-banner'); const addPrBtn = document.getElementById('admin-add-pr-container');
-            if (isAdmin) { adminText.textContent = currentLang === 'th' ? "ออกจากระบบ (Admin)" : "Logout (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) adminBanner.classList.remove('hidden'); if(addPrBtn) addPrBtn.classList.remove('hidden'); } 
+            if (isAdmin) { adminText.textContent = currentLang === 'th' ? "ออกจากระบบ (Admin)" : "Logout (Admin)"; adminText.classList.add('text-brand'); adminText.classList.remove('text-gray-500'); if(adminBanner) adminBanner.classList.remove('hidden'); if(addPrBtn) addPrBtn.classList.remove('hidden'); }
             else { adminText.textContent = currentLang === 'th' ? "ผู้ดูแลระบบ" : "Admin"; adminText.classList.remove('text-brand'); adminText.classList.add('text-gray-500'); if(adminBanner) adminBanner.classList.add('hidden'); if(addPrBtn) addPrBtn.classList.add('hidden'); }
         }
 
@@ -694,7 +709,7 @@
         // 📰 4. ระบบข่าวประชาสัมพันธ์ (Realtime Database + Base64)
         // ==========================================
         let prPostsData = [];
-        let selectedFilesForUpload = []; 
+        let selectedFilesForUpload = [];
 
         if (db) {
             db.ref('pr_posts').on('value', (snapshot) => {
@@ -702,7 +717,7 @@
                 prPostsData = [];
                 if (data) {
                     Object.keys(data).forEach(key => { prPostsData.push({ id: key, ...data[key] }); });
-                    prPostsData.reverse(); 
+                    prPostsData.reverse();
                 }
                 renderDynamicPR();
             }, error => {
@@ -714,7 +729,7 @@
         function renderDynamicPR() {
             const grid = document.getElementById('dynamic-pr-grid'); if(!grid) return; grid.innerHTML = '';
             const txtPics = currentLang === 'th' ? 'รูป' : 'Pics';
-            
+
             prPostsData.forEach((post, index) => {
                 const imageList = post.images || [];
                 const displayImg = imageList.length > 0 ? imageList[0] : `https://placehold.co/800x400/f8fafc/FF6600?text=No+Image`;
@@ -739,7 +754,7 @@
             const files = Array.from(event.target.files);
             selectedFilesForUpload = [...selectedFilesForUpload, ...files];
             renderUploadPreviews();
-            event.target.value = ''; 
+            event.target.value = '';
         });
 
         function renderUploadPreviews() {
@@ -804,13 +819,13 @@
                 showDialog(currentLang === 'th' ? 'ข้อมูลไม่ครบ' : 'Missing Info', currentLang === 'th' ? 'กรุณากรอก "หัวข้อข่าว" และ "คำอธิบายสั้นๆ"' : 'Please fill title and short description.');
                 return;
             }
-            
+
             const btnText = document.getElementById('save-pr-text');
             const spinner = document.getElementById('pr-loading-spinner');
             const saveBtn = document.getElementById('save-pr-btn');
             spinner.classList.remove('hidden');
             saveBtn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
-            
+
             let uploadedUrls = [];
             try {
                 if (selectedFilesForUpload.length > 0) {
@@ -821,12 +836,12 @@
                     }
                 }
 
-                await db.ref('pr_posts').push({ 
-                    title: title, 
-                    short_desc: short, 
-                    images: uploadedUrls, 
-                    full_desc: full, 
-                    timestamp: firebase.database.ServerValue.TIMESTAMP 
+                await db.ref('pr_posts').push({
+                    title: title,
+                    short_desc: short,
+                    images: uploadedUrls,
+                    full_desc: full,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
 
                 closeCreatePRModal();
@@ -855,27 +870,27 @@
         function openDynamicPR(index) {
             const post = prPostsData[index]; document.getElementById('dynamic-modal-title').textContent = post.title;
             const imageList = post.images || [];
-            const imgContainer = document.getElementById('dynamic-modal-img-container'); 
-            const sliderTrack = document.getElementById('dynamic-slider-track'); 
-            const sliderDots = document.getElementById('dynamic-slider-dots'); 
+            const imgContainer = document.getElementById('dynamic-modal-img-container');
+            const sliderTrack = document.getElementById('dynamic-slider-track');
+            const sliderDots = document.getElementById('dynamic-slider-dots');
             const sliderBtns = document.querySelectorAll('.dynamic-slider-btn');
-            
+
             sliderTrack.innerHTML = ''; sliderDots.innerHTML = ''; currentDynamicSlide = 0; totalDynamicSlides = imageList.length;
             if (imageList.length > 0) {
                 imgContainer.classList.remove('hidden');
                 imageList.forEach((url, i) => {
-                    const img = document.createElement('img'); 
-                    img.src = url; 
-                    img.className = 'w-full h-full object-contain shrink-0 cursor-zoom-in'; 
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'w-full h-full object-contain shrink-0 cursor-zoom-in';
                     img.onerror = function() { this.src = 'https://placehold.co/800x600/f8fafc/FF6600?text=No+Image'; };
-                    img.onclick = () => { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox-modal').classList.remove('hidden'); }; 
+                    img.onclick = () => { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox-modal').classList.remove('hidden'); };
                     sliderTrack.appendChild(img);
-                    
-                    if (imageList.length > 1) { 
-                        const dot = document.createElement('button'); 
-                        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-brand w-4' : 'bg-gray-300 hover:bg-gray-400'}`; 
-                        dot.onclick = () => goToDynamicSlide(i); 
-                        sliderDots.appendChild(dot); 
+
+                    if (imageList.length > 1) {
+                        const dot = document.createElement('button');
+                        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-brand w-4' : 'bg-gray-300 hover:bg-gray-400'}`;
+                        dot.onclick = () => goToDynamicSlide(i);
+                        sliderDots.appendChild(dot);
                     }
                 });
                 if (imageList.length > 1) { sliderBtns.forEach(btn => btn.classList.remove('hidden')); sliderDots.classList.remove('hidden'); } else { sliderBtns.forEach(btn => btn.classList.add('hidden')); sliderDots.classList.add('hidden'); }
@@ -897,8 +912,8 @@
 
         window.addEventListener('load', () => {
             applyLanguage();
-            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 800); 
-            updateAdminUI(); renderGallery(); 
+            setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => document.getElementById('loader').style.display = 'none', 500); }, 800);
+            updateAdminUI(); renderGallery();
             if(document.getElementById('view-schedule').classList.contains('block')) renderCalendar();
         });
 
@@ -915,13 +930,31 @@
         const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = {};
         let editingEventIndex = null;
         let activeViewEventArgs = null;
-        
+
         const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
         const engMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
+
         const thaiDays = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
         const engDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        
+
+        function getEventTitle(eventData) {
+            return currentLang === 'th'
+                ? (eventData.title_th || eventData.title || eventData.title_en || '')
+                : (eventData.title_en || eventData.title || eventData.title_th || '');
+        }
+
+        function getEventDetails(eventData) {
+            return currentLang === 'th'
+                ? (eventData.details_th || eventData.details || eventData.details_en || '')
+                : (eventData.details_en || eventData.details || eventData.details_th || '');
+        }
+
+        function escapeEventText(value) {
+            return String(value || '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
+
         if(db) {
             db.ref('events').on('value', (snapshot) => {
                 eventsData = snapshot.val() || {};
@@ -933,9 +966,9 @@
         }
 
         function renderCalendar() {
-            if(!calendarBody) return; calendarBody.innerHTML = ''; 
-            const y = currentDate.getFullYear(); const m = currentDate.getMonth(); 
-            
+            if(!calendarBody) return; calendarBody.innerHTML = '';
+            const y = currentDate.getFullYear(); const m = currentDate.getMonth();
+
             const months = currentLang === 'th' ? thaiMonths : engMonths;
             const yearDisplay = currentLang === 'th' ? y + 543 : y;
             document.getElementById('current-month-year').textContent = `${months[m]} ${yearDisplay}`;
@@ -952,40 +985,40 @@
             const firstDay = new Date(y, m, 1).getDay(); const lastDay = new Date(y, m + 1, 0).getDate(); const prevLastDay = new Date(y, m, 0).getDate();
             for (let x = firstDay; x > 0; x--) calendarBody.innerHTML += `<div class="p-1 md:p-2 border-b border-r border-gray-100 bg-gray-50/50 opacity-50"><span class="text-xs md:text-sm text-gray-400">${prevLastDay - x + 1}</span></div>`;
             const today = new Date();
-            
+
             for (let i = 1; i <= lastDay; i++) {
                 const ds = `${y}-${String(m + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const isToday = i === today.getDate() && m === today.getMonth() && y === today.getFullYear();
-                
+
                 let hoverClass = '';
                 if (isAdmin) hoverClass = 'cursor-pointer hover:bg-orange-50/50';
-                
-                const div = document.createElement('div'); 
+
+                const div = document.createElement('div');
                 div.className = `p-1 md:p-2 border-b border-r border-gray-100 relative ${isToday ? 'bg-orange-50/30' : 'bg-white'} group transition-colors duration-200 flex flex-col h-full`;
-                
+
                 let html = `<div class="flex justify-center mb-1"><span class="inline-flex justify-center items-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-medium ${isToday ? 'bg-brand text-white shadow-sm' : 'text-gray-700'}">${i}</span></div>`;
-                
-                let evHTML = '<div class="flex-grow flex flex-col gap-0.5 md:gap-1 overflow-y-auto custom-scrollbar">'; 
+
+                let evHTML = '<div class="flex-grow flex flex-col gap-0.5 md:gap-1 overflow-y-auto custom-scrollbar">';
                 let hasEvents = false;
 
-                if (eventsData[ds]) { 
+                if (eventsData[ds]) {
                     const dayEvents = Array.isArray(eventsData[ds]) ? eventsData[ds] : Object.values(eventsData[ds]);
                     hasEvents = dayEvents.some(e => e != null);
-                    
-                    if (!isAdmin && hasEvents) hoverClass = 'cursor-pointer hover:bg-gray-50'; 
 
-                    dayEvents.forEach((ev, idx) => { 
-                        if(!ev) return; 
+                    if (!isAdmin && hasEvents) hoverClass = 'cursor-pointer hover:bg-gray-50';
+
+                    dayEvents.forEach((ev, idx) => {
+                        if(!ev) return;
                         evHTML += `
                         <div class="text-[9px] md:text-xs bg-brand/10 md:bg-brand text-brand md:text-white px-1 py-0.5 md:px-2 md:py-1 rounded-sm md:rounded shadow-sm flex justify-between items-center w-full overflow-hidden border border-brand/20 md:border-none">
-                            <span class="truncate block w-full text-center md:text-left">${ev.title}</span>`; 
-                        
+                            <span class="truncate block w-full text-center md:text-left">${escapeEventText(getEventTitle(ev))}</span>`;
+
                         if(isAdmin) {
-                            evHTML += `<button class="hidden md:flex ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`; 
+                            evHTML += `<button class="hidden md:flex ml-1 p-1 rounded bg-black/20 hover:bg-black/30 shrink-0" onclick="event.stopPropagation(); deleteEvent('${ds}', ${idx});"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>`;
                         }
-                        evHTML += `</div>`; 
-                    }); 
+                        evHTML += `</div>`;
+                    });
                 }
-                
+
                 div.className += ` ${hoverClass}`;
                 div.innerHTML = html + evHTML + '</div>';
 
@@ -1000,20 +1033,22 @@
         }
         document.getElementById('prev-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
         document.getElementById('next-month')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
-        
+
         function openEventModal(key, d, m, y) {
-            selectedDateKey = key; 
+            selectedDateKey = key;
             editingEventIndex = null;
             const preDay = currentLang === 'th' ? 'วันที่ ' : '';
-            document.getElementById('modal-date-text').textContent = `${preDay}${d} ${m} ${y}`; 
-            document.getElementById('event-title').value = '';
-            document.getElementById('event-details').value = '';
+            document.getElementById('modal-date-text').textContent = `${preDay}${d} ${m} ${y}`;
+            document.getElementById('event-title-th').value = '';
+            document.getElementById('event-title-en').value = '';
+            document.getElementById('event-details-th').value = '';
+            document.getElementById('event-details-en').value = '';
             document.getElementById('event-photographers').value = '';
             document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'เพิ่มกิจกรรม' : 'Add Event';
-            
+
             const list = document.getElementById('existing-events-list'); const cont = document.getElementById('existing-events-container');
-            if(eventsData[key] && Object.keys(eventsData[key]).length > 0) { 
-                cont.classList.remove('hidden'); list.innerHTML = ''; 
+            if(eventsData[key] && Object.keys(eventsData[key]).length > 0) {
+                cont.classList.remove('hidden'); list.innerHTML = '';
                 const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
                 dayEvents.forEach((ev, idx) => {
                     const txtDel = currentLang === 'th' ? 'ลบ' : 'Del';
@@ -1022,9 +1057,9 @@
                             ? `<span class="block text-xs text-gray-500">${ev.photographers.length} ${currentLang === 'th' ? 'ช่างภาพ' : 'photographers'}</span>`
                             : '';
                         const editText = currentLang === 'th' ? 'แก้ไข' : 'Edit';
-                        list.innerHTML += `<li class="flex justify-between items-center gap-2 p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium min-w-0">${ev.title}${photographerSummary}</span><span class="flex shrink-0 gap-2"><button onclick="editEvent('${key}', ${idx})" class="text-brand hover:text-brand-dark text-xs font-bold px-2">${editText}</button><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></span></li>`;
+                        list.innerHTML += `<li class="flex justify-between items-center gap-2 p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium min-w-0">${escapeEventText(getEventTitle(ev))}${photographerSummary}</span><span class="flex shrink-0 gap-2"><button onclick="editEvent('${key}', ${idx})" class="text-brand hover:text-brand-dark text-xs font-bold px-2">${editText}</button><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></span></li>`;
                     }
-                }); 
+                });
             } else cont.classList.add('hidden');
             const modal = document.getElementById('event-modal');
             const modalContent = document.getElementById('event-modal-content');
@@ -1048,16 +1083,18 @@
 
             selectedDateKey = dateKey;
             editingEventIndex = index;
-            document.getElementById('event-title').value = eventToEdit.title || '';
-            document.getElementById('event-details').value = eventToEdit.details || '';
+            document.getElementById('event-title-th').value = eventToEdit.title_th || eventToEdit.title || '';
+            document.getElementById('event-title-en').value = eventToEdit.title_en || '';
+            document.getElementById('event-details-th').value = eventToEdit.details_th || eventToEdit.details || '';
+            document.getElementById('event-details-en').value = eventToEdit.details_en || '';
             document.getElementById('event-photographers').value = Array.isArray(eventToEdit.photographers)
                 ? eventToEdit.photographers.join(', ')
                 : '';
             document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'บันทึกการแก้ไข' : 'Save Changes';
             document.getElementById('event-title').focus();
         }
-        
-        function deleteEvent(dateKey, index) { 
+
+        function deleteEvent(dateKey, index) {
             showDialog(
                 currentLang === 'th' ? 'ยืนยันการลบ' : 'Confirm Deletion',
                 currentLang === 'th' ? 'ยืนยันการลบกิจกรรมนี้?' : 'Are you sure you want to delete this event?',
@@ -1094,15 +1131,17 @@
             if (!db) { showDialog(currentLang === 'th' ? 'เชื่อมต่อฐานข้อมูลไม่ได้' : 'Database unavailable', currentLang === 'th' ? 'ตรวจสอบการเชื่อมต่อ Firebase แล้วลองใหม่' : 'Check the Firebase connection and try again.'); return; }
             if (!isAdmin) { showDialog(currentLang === 'th' ? 'ไม่มีสิทธิ์' : 'Not authorized', currentLang === 'th' ? 'กรุณาเข้าสู่ระบบผู้ดูแลก่อนบันทึกงาน' : 'Log in as an admin before saving events.'); return; }
             if (!selectedDateKey) { showDialog(currentLang === 'th' ? 'ไม่ได้เลือกวันที่' : 'No date selected', currentLang === 'th' ? 'ปิดหน้าต่างแล้วเลือกวันที่อีกครั้ง' : 'Close this window and select a date again.'); return; }
-            const t = document.getElementById('event-title').value.trim();
-            const details = document.getElementById('event-details').value.trim();
+            const titleTh = document.getElementById('event-title-th').value.trim();
+            const titleEn = document.getElementById('event-title-en').value.trim();
+            const detailsTh = document.getElementById('event-details-th').value.trim();
+            const detailsEn = document.getElementById('event-details-en').value.trim();
             const photographers = document.getElementById('event-photographers').value
                 .split(/[,，\n]/)
                 .map(name => name.trim())
                 .filter(Boolean);
-            if (!t) {
-                showDialog(currentLang === 'th' ? 'กรุณากรอกชื่องาน' : 'Event name required', currentLang === 'th' ? 'พิมพ์ชื่องานก่อนกดเพิ่มกิจกรรม' : 'Enter an event name before saving.');
-                document.getElementById('event-title').focus();
+            if (!titleTh && !titleEn) {
+                showDialog(currentLang === 'th' ? 'กรุณากรอกชื่องาน' : 'Event name required', currentLang === 'th' ? 'กรอกชื่องานอย่างน้อยหนึ่งภาษา' : 'Enter an event title in at least one language.');
+                document.getElementById(currentLang === 'th' ? 'event-title-th' : 'event-title-en').focus();
                 return;
             }
             saveButton.disabled = true;
@@ -1112,7 +1151,15 @@
                 const dayEvents = existing
                     ? (Array.isArray(existing) ? [...existing] : Object.values(existing)).filter(Boolean)
                     : [];
-                const updatedEvent = { title: t, details, photographers };
+                const updatedEvent = {
+                    title: titleTh || titleEn,
+                    title_th: titleTh,
+                    title_en: titleEn,
+                    details: detailsTh || detailsEn,
+                    details_th: detailsTh,
+                    details_en: detailsEn,
+                    photographers
+                };
                 if (editingEventIndex === null) dayEvents.push(updatedEvent);
                 else dayEvents[editingEventIndex] = updatedEvent;
                 await db.ref('events/' + selectedDateKey).set(dayEvents);
@@ -1132,24 +1179,25 @@
             document.getElementById('view-modal-date-text').textContent = `${preDay}${d} ${m} ${y}`;
             const list = document.getElementById('view-events-list');
             list.innerHTML = '';
-            
+
             if(eventsData[key]) {
                 const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
                 dayEvents.forEach(ev => {
                     if(ev) {
-                        const detailsHTML = ev.details
-                            ? `<p class="text-gray-600 text-sm mt-1 whitespace-pre-wrap">${ev.details}</p>`
+                        const eventDetails = getEventDetails(ev);
+                        const detailsHTML = eventDetails
+                            ? `<p class="text-gray-600 text-sm mt-1 whitespace-pre-wrap">${escapeEventText(eventDetails)}</p>`
                             : '';
                         const photographers = Array.isArray(ev.photographers)
                             ? ev.photographers.filter(name => typeof name === 'string' && name.trim())
                             : [];
                         const photographersHTML = photographers.length
-                            ? `<div class="mt-3 pt-3 border-t border-gray-200"><p class="text-xs font-semibold text-gray-500 mb-1">${currentLang === 'th' ? `ช่างภาพ ${photographers.length} คน` : `Photographers (${photographers.length})`}</p><p class="text-gray-800 text-sm">${photographers.join(', ')}</p></div>`
+                            ? `<div class="mt-3 pt-3 border-t border-gray-200"><p class="text-xs font-semibold text-gray-500 mb-1">${currentLang === 'th' ? `ช่างภาพ ${photographers.length} คน` : `Photographers (${photographers.length})`}</p><p class="text-gray-800 text-sm">${photographers.map(escapeEventText).join(', ')}</p></div>`
                             : '';
                         list.innerHTML += `
                         <div class="bg-gray-50 border border-gray-100 p-4 rounded-xl flex items-start gap-3 hover:bg-orange-50 transition-colors">
                             <div class="mt-1.5 w-2.5 h-2.5 rounded-full bg-brand shrink-0 shadow-sm"></div>
-                            <div class="min-w-0"><p class="text-gray-800 text-sm md:text-base font-semibold leading-relaxed">${ev.title}</p>${detailsHTML}${photographersHTML}</div>
+                            <div class="min-w-0"><p class="text-gray-800 text-sm md:text-base font-semibold leading-relaxed">${escapeEventText(getEventTitle(ev))}</p>${detailsHTML}${photographersHTML}</div>
                         </div>`;
                     }
                 });
