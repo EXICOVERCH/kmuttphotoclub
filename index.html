@@ -888,6 +888,7 @@
         // 🗓️ 5. ระบบตารางงาน (Calendar)
         // ==========================================
         const calendarBody = document.getElementById('calendar-body'); let currentDate = new Date(); let selectedDateKey = ''; let eventsData = {};
+        let editingEventIndex = null;
         
         const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
         const engMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -976,11 +977,13 @@
         
         function openEventModal(key, d, m, y) {
             selectedDateKey = key; 
+            editingEventIndex = null;
             const preDay = currentLang === 'th' ? 'วันที่ ' : '';
             document.getElementById('modal-date-text').textContent = `${preDay}${d} ${m} ${y}`; 
             document.getElementById('event-title').value = '';
             document.getElementById('event-details').value = '';
             document.getElementById('event-photographers').value = '';
+            document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'เพิ่มกิจกรรม' : 'Add Event';
             
             const list = document.getElementById('existing-events-list'); const cont = document.getElementById('existing-events-container');
             if(eventsData[key] && Object.keys(eventsData[key]).length > 0) { 
@@ -992,7 +995,8 @@
                         const photographerSummary = Array.isArray(ev.photographers) && ev.photographers.length
                             ? `<span class="block text-xs text-gray-500">${ev.photographers.length} ${currentLang === 'th' ? 'ช่างภาพ' : 'photographers'}</span>`
                             : '';
-                        list.innerHTML += `<li class="flex justify-between items-center gap-2 p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}${photographerSummary}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></li>`;
+                        const editText = currentLang === 'th' ? 'แก้ไข' : 'Edit';
+                        list.innerHTML += `<li class="flex justify-between items-center gap-2 p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium min-w-0">${ev.title}${photographerSummary}</span><span class="flex shrink-0 gap-2"><button onclick="editEvent('${key}', ${idx})" class="text-brand hover:text-brand-dark text-xs font-bold px-2">${editText}</button><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></span></li>`;
                     }
                 }); 
             } else cont.classList.add('hidden');
@@ -1007,6 +1011,24 @@
             const modalContent = document.getElementById('event-modal-content');
             modalContent.classList.replace('scale-100', 'scale-95');
             setTimeout(() => modal.classList.add('hidden'), 150);
+        }
+
+        function editEvent(dateKey, index) {
+            const storedEvents = eventsData[dateKey];
+            if (!storedEvents) return;
+            const dayEvents = Array.isArray(storedEvents) ? storedEvents : Object.values(storedEvents);
+            const eventToEdit = dayEvents[index];
+            if (!eventToEdit) return;
+
+            selectedDateKey = dateKey;
+            editingEventIndex = index;
+            document.getElementById('event-title').value = eventToEdit.title || '';
+            document.getElementById('event-details').value = eventToEdit.details || '';
+            document.getElementById('event-photographers').value = Array.isArray(eventToEdit.photographers)
+                ? eventToEdit.photographers.join(', ')
+                : '';
+            document.getElementById('save-event-btn').textContent = currentLang === 'th' ? 'บันทึกการแก้ไข' : 'Save Changes';
+            document.getElementById('event-title').focus();
         }
         
         function deleteEvent(dateKey, index) { 
@@ -1064,8 +1086,11 @@
                 const dayEvents = existing
                     ? (Array.isArray(existing) ? [...existing] : Object.values(existing)).filter(Boolean)
                     : [];
-                dayEvents.push({ title: t, details, photographers });
+                const updatedEvent = { title: t, details, photographers };
+                if (editingEventIndex === null) dayEvents.push(updatedEvent);
+                else dayEvents[editingEventIndex] = updatedEvent;
                 await db.ref('events/' + selectedDateKey).set(dayEvents);
+                editingEventIndex = null;
                 closeEventModal();
             } catch (error) {
                 showEventDatabaseError(error);
