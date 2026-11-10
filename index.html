@@ -317,7 +317,7 @@
 
     <!-- Event Modal (Admin Only - Edit/Add) -->
     <div id="event-modal" class="hidden fixed inset-0 bg-gray-900/60 z-[120] flex justify-center items-center backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-md shadow-2xl transform transition-transform scale-95" id="event-modal-content">
+        <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl transform transition-transform scale-95" id="event-modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl md:text-2xl font-bold text-gray-800" data-th="จัดการงานชมรม" data-en="Manage Event">จัดการงานชมรม</h3>
                 <button id="close-modal-icon" class="text-gray-400 hover:text-red-500 p-1 bg-gray-50 rounded-full"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -326,6 +326,14 @@
             <div class="mb-5">
                 <label class="block text-sm font-medium text-gray-700 mb-2" data-th="เพิ่มกิจกรรมใหม่" data-en="Add New Event">เพิ่มกิจกรรมใหม่</label>
                 <input type="text" id="event-title" data-th="เช่น ทริปถ่ายภาพ, ประชุมชมรม" data-en="e.g., Photo Trip, Meeting" placeholder="เช่น ทริปถ่ายภาพ, ประชุมชมรม" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
+            </div>
+            <div class="mb-5">
+                <label for="event-details" class="block text-sm font-medium text-gray-700 mb-2" data-th="รายละเอียดงาน (ไม่บังคับ)" data-en="Event details (optional)">รายละเอียดงาน (ไม่บังคับ)</label>
+                <textarea id="event-details" rows="3" data-th="รายละเอียดหรือหมายเหตุของงาน" data-en="Event details or notes" placeholder="รายละเอียดหรือหมายเหตุของงาน" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none resize-y" style="font-size: 16px;"></textarea>
+            </div>
+            <div class="mb-5">
+                <label for="event-photographers" class="block text-sm font-medium text-gray-700 mb-2" data-th="ช่างภาพ (ใส่ชื่อคั่นด้วยจุลภาค)" data-en="Photographers (separate names with commas)">ช่างภาพ (ใส่ชื่อคั่นด้วยจุลภาค)</label>
+                <input type="text" id="event-photographers" data-th="เช่น สมชาย, สมหญิง" data-en="e.g., Alex, Jamie" placeholder="เช่น สมชาย, สมหญิง" class="w-full border border-gray-200 bg-gray-50 p-3.5 rounded-xl focus:ring-2 focus:ring-brand outline-none" style="font-size: 16px;">
             </div>
             <div id="existing-events-container" class="mb-6 hidden">
                 <label class="block text-sm font-medium text-gray-700 mb-2" data-th="กิจกรรมที่มีอยู่:" data-en="Existing Events:">กิจกรรมที่มีอยู่:</label>
@@ -340,7 +348,7 @@
 
     <!-- View Event Modal (Normal Users) -->
     <div id="view-event-modal" class="hidden fixed inset-0 bg-gray-900/60 z-[120] flex justify-center items-center backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-sm shadow-2xl transform transition-transform scale-95" id="view-event-modal-content">
+        <div class="bg-white rounded-3xl p-5 md:p-6 w-full max-w-sm max-h-[90vh] overflow-y-auto shadow-2xl transform transition-transform scale-95" id="view-event-modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl md:text-2xl font-bold text-gray-800" data-th="รายละเอียดงาน" data-en="Event Details">รายละเอียดงาน</h3>
                 <button onclick="closeViewEventModal()" class="text-gray-400 hover:text-red-500 p-1 bg-gray-50 rounded-full"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -971,6 +979,8 @@
             const preDay = currentLang === 'th' ? 'วันที่ ' : '';
             document.getElementById('modal-date-text').textContent = `${preDay}${d} ${m} ${y}`; 
             document.getElementById('event-title').value = '';
+            document.getElementById('event-details').value = '';
+            document.getElementById('event-photographers').value = '';
             
             const list = document.getElementById('existing-events-list'); const cont = document.getElementById('existing-events-container');
             if(eventsData[key] && Object.keys(eventsData[key]).length > 0) { 
@@ -978,7 +988,12 @@
                 const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
                 dayEvents.forEach((ev, idx) => {
                     const txtDel = currentLang === 'th' ? 'ลบ' : 'Del';
-                    if(ev) list.innerHTML += `<li class="flex justify-between p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></li>`;
+                    if(ev) {
+                        const photographerSummary = Array.isArray(ev.photographers) && ev.photographers.length
+                            ? `<span class="block text-xs text-gray-500">${ev.photographers.length} ${currentLang === 'th' ? 'ช่างภาพ' : 'photographers'}</span>`
+                            : '';
+                        list.innerHTML += `<li class="flex justify-between items-center gap-2 p-2 border-b bg-gray-50 rounded-lg"><span class="text-sm font-medium">${ev.title}${photographerSummary}</span><button onclick="deleteEvent('${key}', ${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">${txtDel}</button></li>`;
+                    }
                 }); 
             } else cont.classList.add('hidden');
             const modal = document.getElementById('event-modal');
@@ -1031,7 +1046,12 @@
             if (!db) { showDialog(currentLang === 'th' ? 'เชื่อมต่อฐานข้อมูลไม่ได้' : 'Database unavailable', currentLang === 'th' ? 'ตรวจสอบการเชื่อมต่อ Firebase แล้วลองใหม่' : 'Check the Firebase connection and try again.'); return; }
             if (!isAdmin) { showDialog(currentLang === 'th' ? 'ไม่มีสิทธิ์' : 'Not authorized', currentLang === 'th' ? 'กรุณาเข้าสู่ระบบผู้ดูแลก่อนบันทึกงาน' : 'Log in as an admin before saving events.'); return; }
             if (!selectedDateKey) { showDialog(currentLang === 'th' ? 'ไม่ได้เลือกวันที่' : 'No date selected', currentLang === 'th' ? 'ปิดหน้าต่างแล้วเลือกวันที่อีกครั้ง' : 'Close this window and select a date again.'); return; }
-            const t = document.getElementById('event-title').value.trim(); 
+            const t = document.getElementById('event-title').value.trim();
+            const details = document.getElementById('event-details').value.trim();
+            const photographers = document.getElementById('event-photographers').value
+                .split(/[,，\n]/)
+                .map(name => name.trim())
+                .filter(Boolean);
             if (!t) {
                 showDialog(currentLang === 'th' ? 'กรุณากรอกชื่องาน' : 'Event name required', currentLang === 'th' ? 'พิมพ์ชื่องานก่อนกดเพิ่มกิจกรรม' : 'Enter an event name before saving.');
                 document.getElementById('event-title').focus();
@@ -1044,7 +1064,7 @@
                 const dayEvents = existing
                     ? (Array.isArray(existing) ? [...existing] : Object.values(existing)).filter(Boolean)
                     : [];
-                dayEvents.push({ title: t });
+                dayEvents.push({ title: t, details, photographers });
                 await db.ref('events/' + selectedDateKey).set(dayEvents);
                 closeEventModal();
             } catch (error) {
@@ -1065,10 +1085,19 @@
                 const dayEvents = Array.isArray(eventsData[key]) ? eventsData[key] : Object.values(eventsData[key]);
                 dayEvents.forEach(ev => {
                     if(ev) {
+                        const detailsHTML = ev.details
+                            ? `<p class="text-gray-600 text-sm mt-1 whitespace-pre-wrap">${ev.details}</p>`
+                            : '';
+                        const photographers = Array.isArray(ev.photographers)
+                            ? ev.photographers.filter(name => typeof name === 'string' && name.trim())
+                            : [];
+                        const photographersHTML = photographers.length
+                            ? `<div class="mt-3 pt-3 border-t border-gray-200"><p class="text-xs font-semibold text-gray-500 mb-1">${currentLang === 'th' ? `ช่างภาพ ${photographers.length} คน` : `Photographers (${photographers.length})`}</p><p class="text-gray-800 text-sm">${photographers.join(', ')}</p></div>`
+                            : '';
                         list.innerHTML += `
                         <div class="bg-gray-50 border border-gray-100 p-4 rounded-xl flex items-start gap-3 hover:bg-orange-50 transition-colors">
                             <div class="mt-1.5 w-2.5 h-2.5 rounded-full bg-brand shrink-0 shadow-sm"></div>
-                            <span class="text-gray-800 text-sm md:text-base font-medium leading-relaxed">${ev.title}</span>
+                            <div class="min-w-0"><p class="text-gray-800 text-sm md:text-base font-semibold leading-relaxed">${ev.title}</p>${detailsHTML}${photographersHTML}</div>
                         </div>`;
                     }
                 });
